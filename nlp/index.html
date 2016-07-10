@@ -13,7 +13,7 @@
 		select{
 			display:inline-block;
 			height:8%;
-			width:20%;
+			width:25%;
 		}
 		/*.bold{
 			font-weight: bold;
@@ -44,7 +44,7 @@
 			color: gray;
 		}
 		.info {
-			font-size: 14px;
+			
 			text-align: center;
 			color: #777;
 			display: none;
@@ -60,22 +60,22 @@
 			vertical-align: top;
 		}
 		#headline {
-			font-size: 40px;
+			
 			font-weight: 300;
 		}
 		#info {
-			font-size: 20px;
+			
 			text-align: center;
 			color: #777;
 			visibility: hidden;
 		}
 		#results {
-			font-size: 14px;
+			
 			font-weight: bold;
 			border: 1px ridge #ddd;
 			padding: 10px;
 			text-align: left;
-			min-height: 80px;
+			min-height: 130px;
 		}
 		#start_button {
 			border: 0;
@@ -88,197 +88,181 @@
 
 		}
 		#test{
-			font-size: 14px;
+			
 			padding: 15px;
 			text-align: left;
-			min-height: 250px;
+			min-height: 200px;
+			max-height: 610px;
+			overflow:auto;
 		}
-		#test2{
-			overflow: auto;
-		}
+		
 	</style>
 	<!--  Scripts-->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="js/materialize.min.js"></script>
+	<script src="js/init.js"></script>
+	<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 </head>
-<body class="flow-text">
-	<nav class="teal" role="navigation">
+<body class="">
+	<nav class="teal lighten-2 " role="navigation">
 		<div class="nav-wrapper container">
 			<a id="logo-container" href="speechtest.html" class="brand-logo white-text center">NLP<sup>Js</sup></a>
 			<ul class="right hide-on-med-and-down">
 				<li><a href="speechtest.html" class="white-text">Home</a></li>
 			</ul>
 
-			<ul id="nav-mobile" class="side-nav teal">
+			<ul id="nav-mobile" class="side-nav teal lighten-2 ">
 				<li><a href="speechtest.html" class="white-text">Home</a></li>
 			</ul>
 			<a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="material-icons">menu</i></a>
 		</div>
 	</nav>
 	<main>
+	<br>
+		<div class="row">
+			<div class="col s12 m6">
 
-		<div class="row flow-text container"><div class="center">Sample Queries</div>
-		<ul class="collapsible">
-			<li>
-				<div class="collapsible-header teal white-text"><i class="material-icons">record_voice_over</i>Show me all the Capabilities with high priority</div>
-				<div class="collapsible-body">
-					<p>Result: Cap4 , Cap2, Cap9, Cap7</p>
+				<div id="info" class="flow-text">
+					<p id="info_start">Click on the microphone icon and begin speaking.</p>
+					<p id="info_speak_now">Speak now.</p>
+					<p id="info_no_speech">No speech was detected. You may need to adjust your<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.</p>
+					<p id="info_no_microphone" style="display:none">No microphone was found. Ensure that a microphone is installed and that<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a> are configured correctly.</p>
+					<p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
+					<p id="info_denied">Permission to use microphone was denied.</p>
+					<p id="info_blocked">Permission to use microphone is blocked. To change, go to chrome://settings/contentExceptions#media-stream</p>
+					<p id="info_upgrade">Web Speech API is not supported by this browser.Upgrade to <a href="//www.google.com/chrome">Chrome</a>version 25 or later.</p>
 				</div>
 
-			</li>
-			<li>
-				<div class="collapsible-header teal white-text"><i class="material-icons">record_voice_over</i>Show me the Capabilities having low Maturity</div>
-				<div class="collapsible-body">
-					<p>Result: Cap1 , Cap2, Cap9<br><i>~Which of them have high Priority</i><br>Result: Cap2, Cap9</p>
-				</div>
-			</li>
-			<li>
-				<div class="collapsible-header teal white-text"><i class="material-icons">record_voice_over</i>Show me the Capabilities with medium Maturity</div>
-				<div class="collapsible-body">
-					<p>Result: Cap3, Cap4, Cap8<br><i>~Which of these are having low priority</i><br>Result: Cap3, Cap8</p>
-				</div>
-			</li>
-		</ul>
-	</div>
+				<div class="center flow-text">
 
-	<div id="info">
-		<p id="info_start">Click on the microphone icon and begin speaking.</p>
-		<p id="info_speak_now">Speak now.</p>
-		<p id="info_no_speech">No speech was detected. You may need to adjust your<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.</p>
-		<p id="info_no_microphone" style="display:none">No microphone was found. Ensure that a microphone is installed and that<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a> are configured correctly.</p>
-		<p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
-		<p id="info_denied">Permission to use microphone was denied.</p>
-		<p id="info_blocked">Permission to use microphone is blocked. To change, go to chrome://settings/contentExceptions#media-stream</p>
-		<p id="info_upgrade">Web Speech API is not supported by this browser.Upgrade to <a href="//www.google.com/chrome">Chrome</a>version 25 or later.</p>
-	</div>
-
-	<div class="center">
-
-		<button id="start_button" onclick="startButton(event)">
-			<img id="start_img" src="mic.gif" alt="Start"></button>
-			<div class="divider"></div>
-			<div id="div_language">
-				<select id="select_language" onchange="updateCountry()"></select>
-				&nbsp;&nbsp;
-				<select id="select_dialect"></select>
-			</div>
-		</div>
-
-		<div class="container"> Command History
-			<div id="results">
-				<span id="final_span" class="final"></span>
-				<span id="interim_span" class="interim"></span>
-			</div>
-		</div>
-		<div class="center">
-			<button id="copy_button" class="button" onclick="nlp()">
-				Show in Result</button>
-				<div id="copy_info" class="info">
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col s12">
-					<ul class="tabs z-depth-1">
-						<li class="tab col s3"><a  class="active" href="#Cap1">Result</a></li>
-						<li class="tab col s3"><a href="#Cap2">All Capabilities</a></li>
-					</ul>
-				</div>
-
-				<div id="Cap1" class="col s12">
-					<div class="container">
+					<button id="start_button" onclick="startButton(event)">
+						<img id="start_img" src="mic.gif" alt="Start"></button>
 						<div class="divider"></div>
-						<div id="test" class="row"></div>
+						
+						<div id="div_language">
+							<select id="select_language" onchange="updateCountry()"></select>
+							&nbsp;&nbsp;
+							<select id="select_dialect"></select>
+						</div>
+					</div>
+					<br>
+
+					<div class="flow-text"> Command 
+						<div id="results">
+							<span id="final_span" class="final"></span>
+							<span id="interim_span" class="interim"></span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<ul class="collapsible">
+							<li>
+								<div class="collapsible-header teal lighten-2  white-text flow-text"><i class="material-icons">record_voice_over</i>Sample Queries</div>
+								<div class="collapsible-body">
+									<p>Show me all the Capabilities with high priority<br>Result: Cap4 , Cap2, Cap9, Cap7<div class="divider"></div><p>Show me only those Capabilities having low Maturity<br>Result: Cap1 , Cap2, Cap9<br><i>~Which of them have high Priority</i><br>Result: Cap2, Cap9</p><div class="divider"></div><p>Show me the Capabilities with medium Maturity<br>Result: Cap3, Cap4, Cap8<br><i>~Which of these are having low priority</i><br>Result: Cap3, Cap8</p>
+								</div>
+
+							</li>
+						</ul>
 					</div>
 				</div>
+				<div class="col s12 m6">
+					<div class="">
+						<form action="#">
+							<p>
+								<input type="checkbox" checked="true" id="showAll" disabled="disabled" onchange="init()" />
+								<label for="showAll">Show all</label>
+							</p>
+						</form>
+					</div>
 
-				<div id="Cap2" class="col s12">
-					<div class="container">
-						<div class="divider"></div>
-						<div id="test2" class="row"></div>
+					<div id="Cap1" class="col s12">
+						<div class=""><span class="flow-text">Capabilities</span>
+							<div class="divider"></div>
+							<div id="test" class="row"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</main>
 
-		<footer class="page-footer teal">
+		<footer class="page-footer teal lighten-2 ">
 			<div class="container">
-				<div class="row flow-text"> 
+				<div class="row"> 
 				</div>
 			</div>
-			</div>
-		</footer>
-		<script>
-			var langs =
-			[['Afrikaans',       ['af-ZA']],
-			['Bahasa Indonesia',['id-ID']],
-			['Bahasa Melayu',   ['ms-MY']],
-			['Català',          ['ca-ES']],
-			['Čeština',         ['cs-CZ']],
-			['Deutsch',         ['de-DE']],
-			['English',         ['en-AU', 'Australia'],
-			['en-CA', 'Canada'],
-			['en-IN', 'India'],
-			['en-NZ', 'New Zealand'],
-			['en-ZA', 'South Africa'],
-			['en-GB', 'United Kingdom'],
-			['en-US', 'United States']],
-			['Español',         ['es-AR', 'Argentina'],
-			['es-BO', 'Bolivia'],
-			['es-CL', 'Chile'],
-			['es-CO', 'Colombia'],
-			['es-CR', 'Costa Rica'],
-			['es-EC', 'Ecuador'],
-			['es-SV', 'El Salvador'],
-			['es-ES', 'España'],
-			['es-US', 'Estados Unidos'],
-			['es-GT', 'Guatemala'],
-			['es-HN', 'Honduras'],
-			['es-MX', 'México'],
-			['es-NI', 'Nicaragua'],
-			['es-PA', 'Panamá'],
-			['es-PY', 'Paraguay'],
-			['es-PE', 'Perú'],
-			['es-PR', 'Puerto Rico'],
-			['es-DO', 'República Dominicana'],
-			['es-UY', 'Uruguay'],
-			['es-VE', 'Venezuela']],
-			['Euskara',         ['eu-ES']],
-			['Français',        ['fr-FR']],
-			['Galego',          ['gl-ES']],
-			['Hrvatski',        ['hr_HR']],
-			['IsiZulu',         ['zu-ZA']],
-			['Íslenska',        ['is-IS']],
-			['Italiano',        ['it-IT', 'Italia'],
-			['it-CH', 'Svizzera']],
-			['Magyar',          ['hu-HU']],
-			['Nederlands',      ['nl-NL']],
-			['Norsk bokmål',    ['nb-NO']],
-			['Polski',          ['pl-PL']],
-			['Português',       ['pt-BR', 'Brasil'],
-			['pt-PT', 'Portugal']],
-			['Română',          ['ro-RO']],
-			['Slovenčina',      ['sk-SK']],
-			['Suomi',           ['fi-FI']],
-			['Svenska',         ['sv-SE']],
-			['Türkçe',          ['tr-TR']],
-			['български',       ['bg-BG']],
-			['Pусский',         ['ru-RU']],
-			['Српски',          ['sr-RS']],
-			['한국어',            ['ko-KR']],
-			['中文',             ['cmn-Hans-CN', '普通话 (中国大陆)'],
-			['cmn-Hans-HK', '普通话 (香港)'],
-			['cmn-Hant-TW', '中文 (台灣)'],
-			['yue-Hant-HK', '粵語 (香港)']],
-			['日本語',           ['ja-JP']],
-			['Lingua latīna',   ['la']]];
+		</div>
+	</footer>
+	<script>
+		var langs =
+		[['Afrikaans',       ['af-ZA']],
+		['Bahasa Indonesia',['id-ID']],
+		['Bahasa Melayu',   ['ms-MY']],
+		['Català',          ['ca-ES']],
+		['Čeština',         ['cs-CZ']],
+		['Deutsch',         ['de-DE']],
+		['English',         ['en-AU', 'Australia'],
+		['en-CA', 'Canada'],
+		['en-IN', 'India'],
+		['en-NZ', 'New Zealand'],
+		['en-ZA', 'South Africa'],
+		['en-GB', 'United Kingdom'],
+		['en-US', 'United States']],
+		['Español',         ['es-AR', 'Argentina'],
+		['es-BO', 'Bolivia'],
+		['es-CL', 'Chile'],
+		['es-CO', 'Colombia'],
+		['es-CR', 'Costa Rica'],
+		['es-EC', 'Ecuador'],
+		['es-SV', 'El Salvador'],
+		['es-ES', 'España'],
+		['es-US', 'Estados Unidos'],
+		['es-GT', 'Guatemala'],
+		['es-HN', 'Honduras'],
+		['es-MX', 'México'],
+		['es-NI', 'Nicaragua'],
+		['es-PA', 'Panamá'],
+		['es-PY', 'Paraguay'],
+		['es-PE', 'Perú'],
+		['es-PR', 'Puerto Rico'],
+		['es-DO', 'República Dominicana'],
+		['es-UY', 'Uruguay'],
+		['es-VE', 'Venezuela']],
+		['Euskara',         ['eu-ES']],
+		['Français',        ['fr-FR']],
+		['Galego',          ['gl-ES']],
+		['Hrvatski',        ['hr_HR']],
+		['IsiZulu',         ['zu-ZA']],
+		['Íslenska',        ['is-IS']],
+		['Italiano',        ['it-IT', 'Italia'],
+		['it-CH', 'Svizzera']],
+		['Magyar',          ['hu-HU']],
+		['Nederlands',      ['nl-NL']],
+		['Norsk bokmål',    ['nb-NO']],
+		['Polski',          ['pl-PL']],
+		['Português',       ['pt-BR', 'Brasil'],
+		['pt-PT', 'Portugal']],
+		['Română',          ['ro-RO']],
+		['Slovenčina',      ['sk-SK']],
+		['Suomi',           ['fi-FI']],
+		['Svenska',         ['sv-SE']],
+		['Türkçe',          ['tr-TR']],
+		['български',       ['bg-BG']],
+		['Pусский',         ['ru-RU']],
+		['Српски',          ['sr-RS']],
+		['한국어',            ['ko-KR']],
+		['中文',             ['cmn-Hans-CN', '普通话 (中国大陆)'],
+		['cmn-Hans-HK', '普通话 (香港)'],
+		['cmn-Hant-TW', '中文 (台灣)'],
+		['yue-Hant-HK', '粵語 (香港)']],
+		['日本語',           ['ja-JP']],
+		['Lingua latīna',   ['la']]];
 
 
 
-			var interim_transcript='';
-			var interim='';
-			var final='';
-			var range;
+		var interim_transcript='';
+		var interim='';
+		var final='';
 
  //DemoData
  var c=['Modelling & Simulation','Analytics','Diagnostics','Forecasting & Foresighting','Statistical & Economic Analysis','Investigation Management','Audit Management','Enforcement Management','Inspections Management','Treatment Management','Certification Management','Profiling','Approved Arrangements','Regulatory Risk Management','Industry Support','Grants Management','Market Access Management','Quota Management','Stakeholder Arrangements','Agreements','Reporting & International Obligations','Stakeholder Engagement','Preparedness','Rapid Response','National Response Planning & Coordination','Incident Management','Levies Collection','Levies Audit','Programme Management','Programme Design','Policy Advice','Legal Obligations','Stakeholder Relationship Management'];
@@ -292,48 +276,49 @@
  		flist.push(i);
  		if(p[i]==1){
  			if(m[i]==1){
- 				html+="<div class='card hoverable col s12 m6 deep-orange lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip deep-orange lighten-3'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  			if(m[i]==2){
- 				html+="<div class='card hoverable col s12 m6 deep-orange lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip amber lighten-3'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  			if(m[i]==3){
- 				html+="<div class='card hoverable col s12 m6 deep-orange lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip green lighten-3'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  		}
  		if(p[i]==2){
  			if(m[i]==2){
- 				html+="<div class='card hoverable col s12 m6 purple lighten-4 container'><div class='chip'>Priority:M</div><div class='chip'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:M</div><div class='chip amber lighten-3'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  			if(m[i]==1){
- 				html+="<div class='card hoverable col s12 m6 purple lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip deep-orange lighten-3'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  			if(m[i]==3){
- 				html+="<div class='card hoverable col s12 m6 purple lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip green lighten-3'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  		}
  		if(p[i]==3){
  			if(m[i]==3){
- 				html+="<div class='card hoverable col s12 m6 green lighten-4 container'><div class='chip'>Priority:H</div><div class='chip'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:H</div><div class='chip green lighten-3'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  			if(m[i]==2){
- 				html+="<div class='card hoverable col s12 m6 green lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip amber lighten-3'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  			if(m[i]==1){
- 				html+="<div class='card hoverable col s12 m6 green lighten-4 container'><div class='chip'>Priority:L</div><div class='chip'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+ 				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5 container'><div class='chip white'>Priority:L</div><div class='chip deep-orange lighten-3'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
 
  			}
  		}
  	}
- 	document.getElementById("test2").innerHTML=html;
+ 	document.getElementById("test").innerHTML=html;
+ 	document.getElementById("showAll").disabled = "disabled";
 
  }
 
@@ -355,7 +340,7 @@ function show(li,st,ob){
   	if(ob==objects[0]){
   		for (i in li){
   			if(p[i]==3){
-  				html+="<div class='card hoverable col s12 m4 deep-orange lighten-4'><div class='chip'>Priority:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+  				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5'><div class='chip white'>Priority:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
           //print(c[i]);
           tlist.push(i);
       }
@@ -364,7 +349,7 @@ function show(li,st,ob){
 if(ob==objects[1]){
 	for (i in li){
 		if(m[i]==3){
-			html+="<div class='card hoverable col s12 m4 green lighten-4'><div class='chip'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+			html+="<div class='card hoverable col s12 m6 blue-grey lighten-5'><div class='chip green lighten-3'>Maturity:H</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
           //print(c[i]);
           tlist.push(i);
       }
@@ -375,7 +360,7 @@ if(st==states[1]){
 	if(ob==objects[0]){
 		for (i in li){
 			if(p[i]==1){
-				html+="<div class='card hoverable col s12 m4 green lighten-4'><div class='chip'>Priority:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5'><div class='chip white'>Priority:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
           //print(c[i]);
           tlist.push(i);
       }
@@ -384,7 +369,7 @@ if(st==states[1]){
 if(ob==objects[1]){
 	for (i in li){
 		if(m[i]==1){
-			html+="<div class='card hoverable col s12 m4 deep-orange lighten-4'><div class='chip'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+			html+="<div class='card hoverable col s12 m6 blue-grey lighten-5'><div class='chip deep-orange lighten-3'>Maturity:L</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
           //print(c[i]);
           tlist.push(i);
       }
@@ -395,7 +380,7 @@ if(st==states[2]){
 	if(ob==objects[0]){
 		for (i in li){
 			if(p[i]==2){
-				html+="<div class='card hoverable col s12 m4 purple lighten-4'><div class='chip'>Priority:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+				html+="<div class='card hoverable col s12 m6 blue-grey lighten-5'><div class='chip white'>Priority:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
           //print(c[i]);
           tlist.push(i);
       }
@@ -404,7 +389,7 @@ if(st==states[2]){
 if(ob==objects[1]){
 	for (i in li){
 		if(m[i]==2){
-			html+="<div class='card hoverable col s12 m4 purple lighten-4'><div class='chip'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
+			html+="<div class='card hoverable col s12 m6 blue-grey lighten-5'><div class='chip amber lighten-3'>Maturity:M</div><div class='card-content'><p>"+c[i]+"</p></div></div>";
           //print(c[i]);
           tlist.push(i);
       }
@@ -412,39 +397,38 @@ if(ob==objects[1]){
 }
 }
     // debugger
-    document.getElementById("test").innerHTML=html;
+    if(html.length<50)
+    	responsiveVoice.speak("sorry,didn't recognize your query, Please ask again");
+    else{
+    	document.getElementById("test").innerHTML=html;
+    	document.getElementById("showAll").checked = false;
+    	document.getElementById("showAll").disabled = "";
+    }
     document.getElementById("final_span").innerText='';
     document.getElementById("interim_span").innerText='';
     interim_transcript='';
     final_transcript='';
     interim='';
     final='';
-    // range.length=0;
-    // for (var i = event.resultIndex; i < event.results.length; ++i)
-    //   event.results[i][0].transcript='';
 }
 
-function nlp(){
+function nlp(input){
   //debugger
   var state='';
   var obj='';
   var ch = '';
-  interim = document.getElementById("interim_span").innerText;
-  final = document.getElementById("final_span").innerText;
-  if(final.length>interim.length)
-  	ch=final;
-  else
-  	ch=interim;
+  ch=input;
   
   var chl=[];
   chl=ch.split(" ");
   var listCap = flist;
+  loopP:
   for(var i=0;i<chl.length;i++){
   	for(var j = 0;j<nested.length;j++){
-  		if(chl[i] == nested[j])
+  		if(chl[i] == nested[j]){
   			listCap = tlist;
-  		else if(chl[i]=='show')
-  			listCap = flist;
+  			break loopP;
+  		}
   	}
   }
 
@@ -532,6 +516,7 @@ if (!('webkitSpeechRecognition' in window)) {
 			showInfo('info_start');
 			return;
 		}
+		
 		showInfo('');
 		if (window.getSelection) {
 			window.getSelection().removeAllRanges();
@@ -546,18 +531,19 @@ if (!('webkitSpeechRecognition' in window)) {
     interim_transcript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
     	if (event.results[i].isFinal) {
+    		
     		final_transcript += event.results[i][0].transcript;
+    		nlp(final_transcript);
     	} else {
     		interim_transcript += event.results[i][0].transcript;
     	}
-    }debugger
+    }
     final_transcript = capitalize(final_transcript);
     final_span.innerHTML = linebreak(final_transcript);
     interim_span.innerHTML = linebreak(interim_transcript);
-    if (final_transcript || interim_transcript) {
-    	showButtons('inline-block');
-    }
+    
     event.results.length=0;
+
 };
 }
 
@@ -577,16 +563,6 @@ function capitalize(s) {
 	return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
 
-function copyButton() {
-	if (recognizing) {
-		recognizing = false;
-		recognition.stop();
-	}
-	copy_button.style.display = 'none';
-	copy_info.style.display = 'inline-block';
-	showInfo('');
-}
-
 
 function startButton(event) {
 	if (recognizing) {
@@ -601,7 +577,6 @@ function startButton(event) {
 	interim_span.innerHTML = '';
 	start_img.src = 'mic-slash.gif';
 	showInfo('info_allow');
-	showButtons('none');
 	start_timestamp = event.timeStamp;
 }
 
@@ -618,16 +593,6 @@ function showInfo(s) {
 	}
 }
 
-var current_style;
-function showButtons(style) {
-	if (style == current_style) {
-		return;
-	}
-	current_style = style;
-	copy_button.style.display = style;
-	copy_info.style.display = 'none';
-
-}
 $( document ).ready(function() {
 	init();
 });

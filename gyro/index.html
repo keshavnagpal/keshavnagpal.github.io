@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>GyroV3</title>
+<meta name="viewport" content="width=device-width,user-scalable=yes" />
+<style>
+body {
+	font-family: helvetica, arial, sans serif;
+	background-color: #f0f0f0;
+}
+#sphere {
+	position: absolute;	
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	-webkit-radius: 50px;
+	background-color: green;
+}
+span{color: red;}
+#cong{color: red;}
+
+</style>
+</head>
+
+<body>
+<div id="content">
+     <div id="sphere"></div>
+</div>
+
+<span id="minutes">00</span>:<span id="seconds">00</span>
+
+<svg height="300" width="300">
+  <circle id="circ" cx="140" cy="140" r="130" stroke="green" stroke-width="1" fill="white"/>
+</svg>
+
+<h3>Gyro-Alpha</h3>
+High-Score <span id="hscorem">00</span>:<span id="hscores">00</span>
+<p id ="cong"></p>
+<script type="text/javascript">
+
+//Timer
+var highS=0;
+var sec = 0;
+var timer;
+function pad(val) {
+    return val > 9 ? val : "0" + val;
+}
+
+//sphere movement
+var x = 0, y = 0,
+    vx = 0, vy = 0,
+	ax = 0, ay = 0;
+	
+var sphere = document.getElementById("sphere");
+
+if (window.DeviceMotionEvent != undefined) {
+	window.ondevicemotion = function(e) {
+		ax = event.accelerationIncludingGravity.x * 5;
+		ay = event.accelerationIncludingGravity.y * 5;
+				
+	}
+
+	setInterval( function() {
+		var landscapeOrientation = window.innerWidth/window.innerHeight > 1;
+		if ( landscapeOrientation) {
+			vx = vx + ay;
+			vy = vy + ax;
+		} else {
+			vy = vy - ay;
+			vx = vx + ax;
+		}
+		vx = vx * 0.98;
+		vy = vy * 0.98;
+		y = parseInt(y + vy / 50);
+		x = parseInt(x + vx / 50);
+		
+		boundingBoxCheck();
+		
+		sphere.style.top = y + "px";
+		sphere.style.left = x + "px";
+
+		if(x > 3 && y > 3 && x < 265 && y < 265){
+		timer =	setInterval(writeScore(), 1000);
+		}
+		else{
+			clearInterval(timer);
+			highScore();
+			sec=0;
+			}
+
+		
+	}, 25);
+
+} 
+
+function writeScore()
+{
+ 
+    document.getElementById("seconds").innerHTML = pad(++sec % 60);
+    document.getElementById("minutes").innerHTML = pad(parseInt(sec / 60, 10));
+	 
+}
+function highScore(){
+	if(sec>highS){
+ 		highS=sec;
+ 		document.getElementById("hscores").innerHTML = pad(sec % 60);
+    	document.getElementById("hscorem").innerHTML = pad(parseInt(sec / 60, 10));
+	 
+ 	}
+
+ 	//comment on high score
+ 	var best = parseInt(document.getElementById("minutes").innerHTML,10);
+ 	
+ 	
+ 	if(best>2){
+ 		document.getElementById("cong").innerHTML="congrats! you've beaten noobie ayushman sen ";
+	}
+
+}
+
+function boundingBoxCheck(){
+	if (x<0) { x = 0; vx = -vx; }
+	if (y<0) { y = 0; vy = -vy; }
+	if (x>document.documentElement.clientWidth-20) { x = document.documentElement.clientWidth-20; vx = -vx; }
+	if (y>document.documentElement.clientHeight-20) { y = document.documentElement.clientHeight-20; vy = -vy; }
+	
+}
+</script>
+
+</body>
+</html>

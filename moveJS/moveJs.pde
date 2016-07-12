@@ -11,9 +11,9 @@ void setup() {
   mY=height/2;
 }
 
-
+int score=0;
 void draw() {
-  background(20); 
+  background(score*10,score*10,score*10); 
   if(mouseY<height-45 && mouseY>40){
     mY=mouseY;
   }
@@ -38,11 +38,12 @@ void draw() {
   if (x>width-12||x<12) {
     if (y<mouseY+40 && y>mouseY-40 && x<width+10) {
       xspeed=-xspeed;
+      score+=1;
     }
   }
   if(x>width+150||x<-150){
-    background(255);
     xspeed=-xspeed;
+    score=0;
   }
 }
 void mousePressed(){

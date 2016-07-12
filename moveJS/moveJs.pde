@@ -1,5 +1,6 @@
 int x, y, xspeed, yspeed;
 boolean going=false;
+int mY;
 
 void setup() {
   size(720, 400);
@@ -7,17 +8,21 @@ void setup() {
   y=100;
   xspeed=5;
   yspeed=5;
+  mY=height/2;
 }
 
 
 void draw() {
-  background(20);
+  background(20); 
+  if(mouseY<height-45 && mouseY>40){
+    mY=mouseY;
+  }
   fill(255);
   rectMode(CENTER);
-  rect(2, mouseY, 10, 100);
+  rect(3, mY, 10, 100);
 
   fill(255);
-  rect(width-12, mouseY, 10, 100);
+  rect(width-4, mY, 10, 100);
 
   fill(250);
   ellipse(x, y, 20, 20);
@@ -34,6 +39,10 @@ void draw() {
     if (y<mouseY+40 && y>mouseY-40 && x<width+10) {
       xspeed=-xspeed;
     }
+  }
+  if(x>width+150||x<-150){
+    background(255);
+    xspeed=-xspeed;
   }
 }
 void mousePressed(){

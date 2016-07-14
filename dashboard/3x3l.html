@@ -11,16 +11,19 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <style type="text/css">
     .div1{width:200px;height:200px;}
-    .trborder{border: 1px dashed black;}
+    .trborder{border: 1px dashed black;}  
     .div2-border{ border:1px dashed black;}
-    #printableArea{border:3px solid black;position:absolute;width:1003px;height:702px;top:13%;left:40%;}
+    #printableArea{border:3px solid black;position:absolute;width:1003px;height:704px;top:13%;left:40%;}
     td {padding:0;border-width:0;}
     #scroll{overflow-y: scroll;height:90vh;width:35vw;position: absolute;}
     @media print {
-    /* style sheet for print goes here */
-    .trborder{border: none;}   
-    .div2-border{ border:none;}
-  }
+      /* style sheet for print goes here */
+      .trborder{border: none;}   
+      .div2-border{ border:none;}
+    }
+
+
+
   </style>
 
   <!-- Scripts  -->
@@ -29,26 +32,55 @@
   <script src="js/init.js"></script>
   <script type="text/javascript">
 
-  var r,topx,r1,r2,r3,r4,r5;
-  
+    var r,topx,r1,r2,r3,r4,r5;
+    var content=[];
 
-  //initializations
-  function initiate(){
-    
+   //initializations
+   function initiate(){
+
     r=0;
     topx=0;
-  
+    
     addOrRemomveRow(1);
+  }
+
+  function config(){
+
+    $('#printableArea .dashboard-row').each(function(){
+      var idx='';
+      idx=$(this).attr('id');
+
+      var rowObj = {};
+      rowObj.rowId = idx;
+      var linkedColumns = $(this).find(".pd");
+      rowObj.linkedColumnList = [];
+      for(var x in linkedColumns){
+        if(isNaN(x))
+          continue;
+
+        var colObj = {};
+        colObj.coloumnId = $(linkedColumns[x]).attr("id");
+
+        var linkedWidget = $(linkedColumns[x]).find("img");
+        if(linkedWidget[0] != null)
+          colObj.widgetId = $(linkedWidget[0]).attr("id");
+        
+        rowObj.linkedColumnList.push(colObj);
+      }
+
+      content.push(rowObj);
+    });
     
   }
 
+  //dynamically add columns
   function addOrRemomveBox(trId,col,row){
     //debugger
     if(trId=="tr1"){
       if(col<r1)
-          r1--;
+        r1--;
       else
-          r1++;
+        r1++;
       $("#"+trId).html('');
 
       var widthOfBoxes = 1000 / col;
@@ -56,16 +88,16 @@
 
       for(var i = 1 ; i <= col;i++)
       {
-        var htm = '<div class="pd" id = "tc'+i+'" style="float:left;"> <div  style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+        var htm = '<div class="pd" id = "tr1tc'+i+'" style="float:left;"> <div  style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
         $("#"+trId).append(htm);
       }
-  }
+    }
 
-  else if(trId=="tr2"){
+    else if(trId=="tr2"){
       if(col<r2)
-          r2--;
+        r2--;
       else
-          r2++;
+        r2++;
       $("#"+trId).html('');
 
       var widthOfBoxes = 1000 / col;
@@ -73,15 +105,15 @@
 
       for(var i = 1 ; i <= col;i++)
       {
-        var htm = '<div class="pd" id = "tc'+i+'" style="float:left;"> <div  style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+        var htm = '<div class="pd" id = "tr2tc'+i+'" style="float:left;"> <div  style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
         $("#"+trId).append(htm);
       }
-  }
-  else if(trId=="tr3"){
+    }
+    else if(trId=="tr3"){
       if(col<r3)
-          r3--;
+        r3--;
       else
-          r3++;
+        r3++;
       $("#"+trId).html('');
 
       var widthOfBoxes = 1000 / col;
@@ -89,15 +121,15 @@
 
       for(var i = 1 ; i <= col;i++)
       {
-        var htm = '<div class="pd" id = "tc'+i+'" style="float:left;"> <div style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+        var htm = '<div class="pd" id = "tr3tc'+i+'" style="float:left;"> <div style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
         $("#"+trId).append(htm);
       }
-  }
-  else if(trId=="tr4"){
+    }
+    else if(trId=="tr4"){
       if(col<r4)
-          r4--;
+        r4--;
       else
-          r4++;
+        r4++;
       $("#"+trId).html('');
 
       var widthOfBoxes = 1000 / col;
@@ -105,15 +137,15 @@
 
       for(var i = 1 ; i <= col;i++)
       {
-        var htm = '<div class="pd" id = "tc'+i+'" style="float:left;"> <div style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+        var htm = '<div class="pd" id = "tr4tc'+i+'" style="float:left;"> <div style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
         $("#"+trId).append(htm);
       }
-  }
-  else if(trId=="tr5"){
+    }
+    else if(trId=="tr5"){
       if(col<r5)
-          r5--;
+        r5--;
       else
-          r5++;
+        r5++;
       $("#"+trId).html('');
 
       var widthOfBoxes = 1000 / col;
@@ -121,16 +153,18 @@
 
       for(var i = 1 ; i <= col;i++)
       {
-        var htm = '<div class="pd" id = "tc'+i+'" style="float:left;"> <div style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
+        var htm = '<div class="pd" id = "tr5tc'+i+'" style="float:left;"> <div style="width:'+(widthOfBoxes-1)+'px;height:'+(heightOfBoxes)+'px;" class="div2-border" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
         $("#"+trId).append(htm);
       }
-  }
-  else{
-    alert("Current row not supported");
-  }
+    }
+    else{
+      alert("Current row not supported");
+    }
+    content=[];
+    config();
 
-}
-
+  }
+//adding buttons to the dynamically added rows
 function addButtons(row){
   var topOff = 96/(row+1);
   topx+=topOff
@@ -142,17 +176,20 @@ function addButtons(row){
     topx+=topOff;
     x+=1;
   }
- 
+  
   topx=0;
   
 }
 
 
 
+
+
+//adding rows
 function addOrRemomveRow(row) {
   r1=r2=r3=r4=r5=1;
 
-    if(row<6){
+  if(row<6){
     var heightOfRow = 700 / row;
     if(row<r)
       r--;
@@ -161,22 +198,23 @@ function addOrRemomveRow(row) {
     $("#printableArea").html('');
     for(var i = 1 ; i <= row;i++)
     {
-      var htm = '<div id = "tr'+i+'" style="height:'+(heightOfRow)+'px;width:1000px;" class="trborder" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
-
+      var htm = '<div id = "tr'+i+'" style="height:'+(heightOfRow)+'px; width:1000px;" class="trborder dashboard-row" ondrop="drop(event)" ondragover="allowDrop(event)"></div>'
       $("#printableArea").append(htm);
     } 
     addButtons(row);
-}
+  }
   else
     alert("upto 5 rows supported");
+  content=[];
+  config();
 }
 
 
 $( document ).ready(function() {
   initiate();
 });
-   
-    function allowDrop(ev) {
+   //Drag&Drop
+   function allowDrop(ev) {
      ev.preventDefault();
    }
 
@@ -191,23 +229,25 @@ $( document ).ready(function() {
       var data = ev.dataTransfer.getData("text");
       ev.target.appendChild(document.getElementById(data));
     }
+    content=[];
+    config();
   }
 
 
- 
-  function printDiv(divName) {
-    
+ //printDash
+ function printDiv(divName) {
+
    var printContents = document.getElementById(divName).innerHTML;
    var originalContents = document.body.innerHTML;
 
    document.body.innerHTML = printContents;
 
-    // $('body *').find('.div2').removeClass('div2-border')
+    // $('body *').find('.div2').removeClass('div2-border');
     // $('body *').find('.trplain').removeClass('trborder');
-   window.print();
+    window.print();
 
-   document.body.innerHTML = originalContents;
- }
+    document.body.innerHTML = originalContents;
+  }
   
 </script>
 </head>
@@ -217,7 +257,7 @@ $( document ).ready(function() {
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo white-text">DashBoard Maker</a>
       <ul class="right hide-on-med-and-down">
-        
+
        <li>
         <a href="3x3l.html" class="white-text">Reset</a>
       </li>
@@ -225,65 +265,65 @@ $( document ).ready(function() {
         <a href="index.html" class="white-text">Portrait</a>
       </li>
       <li>
-         <a href="#!" class="white-text" onclick="printDiv('printableArea')">Print
-         </a>
-       </li>
+       <a href="#!" class="white-text" onclick="printDiv('printableArea')">Print
+       </a>
+     </li>
      
-    </ul>
-    <ul id="nav-mobile" class="side-nav blue">
+   </ul>
+   <ul id="nav-mobile" class="side-nav blue">
     <li>
-        <a href="3x3l.html" class="white-text">Reset</a>
-      </li>
-      <li>
-        <a href="index.html" class="white-text">Portrait</a>
-      </li>
-      <li>
-         <a href="#!" class="white-text" onclick="printDiv('printableArea')">Print
-         </a>
-       </li>
-    </ul>
-    <a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="material-icons">menu</i></a>
-    
-  </div>
+      <a href="3x3l.html" class="white-text">Reset</a>
+    </li>
+    <li>
+      <a href="index.html" class="white-text">Portrait</a>
+    </li>
+    <li>
+     <a href="#!" class="white-text" onclick="printDiv('printableArea')">Print
+     </a>
+   </li>
+ </ul>
+ <a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="material-icons">menu</i></a>
+
+</div>
 </nav>
 
 <main>
-  
+
   <div id="scroll">
-  <table>
-         <tr>
-           <td>
-             <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-              <img id="drag1" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-            </div>
-          </td>
-          <td>
-           <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <img id="drag2" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-           </div>
-          </td>
-          <td>
-            <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-              <img id="drag3" src="widgets/widget7.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-            </div>
-          </td>
-        </tr>
-        
-    <tr>
-     <td>
+    <table>
+     <tr>
+       <td>
+         <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <img id="drag1" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+        </div>
+      </td>
+      <td>
        <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img id="drag4" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+        <img id="drag2" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
       </div>
     </td>
     <td>
+      <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img id="drag3" src="widgets/widget7.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+   <td>
      <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-      <img id="drag5" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+      <img id="drag4" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
     </div>
   </td>
   <td>
    <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag6" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+    <img id="drag5" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
   </div>
+</td>
+<td>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag6" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td>
 </tr>
 
@@ -294,35 +334,35 @@ $( document ).ready(function() {
   </div>
 </td>
 <td>
-   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag8" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-  </div>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag8" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td> 
 <td>
-   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag22" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-  </div>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag22" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td>
 </tr>
 
-     <tr>
-       <td>
-         <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-          <img id="drag9" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-        </div>
-      </td>
-      <td>
-       <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img id="drag10" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-      </div>
-    </td>
-    <td>
-     <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-      <img id="drag11" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-    </div>
-  </td>
-  </tr>
-  
+<tr>
+ <td>
+   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <img id="drag9" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+  </div>
+</td>
+<td>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag10" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
+</td>
+<td>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag11" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
+</td>
+</tr>
+
 <tr>
  <td>
    <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -330,35 +370,35 @@ $( document ).ready(function() {
   </div>
 </td>
 <td>
-   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag13" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-  </div>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag13" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td>
 <td>
-   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag14" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-  </div>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag14" src="widgets/widget6.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td>
 </tr>
 
-     <tr>
-       <td>
-         <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-          <img id="drag15" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-        </div>
-      </td>
-      <td>
-       <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img id="drag16" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-      </div>
-      </td>
-      <td>
-     <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-      <img id="drag17" src="widgets/widget7.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-    </div>
-  </td>
-    </tr>
-    
+<tr>
+ <td>
+   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <img id="drag15" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+  </div>
+</td>
+<td>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag16" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
+</td>
+<td>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag17" src="widgets/widget7.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
+</td>
+</tr>
+
 <tr>
  <td>
    <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -366,14 +406,14 @@ $( document ).ready(function() {
   </div>
 </td>
 <td>
-   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag19" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-  </div>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag19" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td>
 <td>
-   <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <img id="drag20" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
-  </div>
+ <div class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img id="drag20" src="widgets/widget3.png" draggable="true" ondragstart="drag(event)" max-width="100%" max-height="100%">
+</div>
 </td>
 </tr>
 
@@ -390,26 +430,23 @@ $( document ).ready(function() {
 </table>
 </div>
 <div>
-    <div id="printableArea"></div>
-  </div>
+  <div id="printableArea"></div>
+</div>
 
-  <table>
-    <tr style="position:absolute;top:8%;left:64%">
-      <td>
-        <a class="btn-floating waves-effect waves-light red" onclick="addOrRemomveRow(r-1)"><i class="material-icons">remove</i></a>
-      </td>
-      <td>
-        <a class="btn-floating waves-effect waves-light blue" onclick="addOrRemomveRow(r+1)"><i class="material-icons">add</i></a>
-      </td>
-    </tr>
-  </table>
+<table>
+  <tr style="position:absolute;top:8%;left:64%">
+    <td>
+      <a class="btn-floating waves-effect waves-light red" onclick="addOrRemomveRow(r-1)"><i class="material-icons">remove</i></a>
+    </td>
+    <td>
+      <a class="btn-floating waves-effect waves-light blue" onclick="addOrRemomveRow(r+1)"><i class="material-icons">add</i></a>
+    </td>
+  </tr>
+</table>
 
-  <table id="buttons">
+<table id="buttons">
 
-  </table>
-
-
-
+</table>
 </main>
 
 </body>

@@ -11,7 +11,9 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <script type="text/javascript">
     function init(){
-      debugger
+      //debugger
+      var inner=document.getElementById("result");
+      inner.innerText='';
       var project=document.getElementById("projects");
       var pchild;
       for(var i=0;i<projects.childNodes.length;i++){
@@ -26,6 +28,7 @@
     function filter(){
       //debugger
       var j=0;
+      var inner=document.getElementById("result");
       var inp = document.getElementById("search").value;
       // var res=inp;
       var res = new RegExp(''+inp+'+');
@@ -33,10 +36,13 @@
       var project=document.getElementById("projects");
       var pchild;
       if(inp.trim()!=''){
+        
+        document.getElementById("showAll").disabled ='';
+        document.getElementById("showAll").checked = false;
 
-       for(var i=0;i<projects.childNodes.length;i++){
-        pchild = project.childNodes[i];
-        debugger
+        for(var i=0;i<projects.childNodes.length;i++){
+          pchild = project.childNodes[i];
+        //debugger
         
         if(pchild.id!=undefined){
           var pid='';
@@ -53,13 +59,11 @@
       }
     }
     if(j<=0){
-      init();
-      alert('No project with name \"'+inp+'\" found');
+      // init();
+      inner.innerText='Showing '+j+' results for \"'+inp+'\"';
+      // alert('No project with name \"'+inp+'\" found');
     }
     else{
-      var inner=document.getElementById("result")
-      document.getElementById("showAll").disabled ='';
-      document.getElementById("showAll").checked = false;
       if(j>1)
         inner.innerText='Showing '+j+' results for \"'+inp+'\"';
       else

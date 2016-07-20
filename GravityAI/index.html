@@ -24,42 +24,50 @@
     }
 
     function filter(){
-    //debugger
-    var j=0;
-    var inp = document.getElementById("search");
-    var res=inp.value;
+      //debugger
+      var j=0;
+      var inp = document.getElementById("search").value;
+      // var res=inp;
+      var res = new RegExp(''+inp+'+');
       //alert(res);
       var project=document.getElementById("projects");
       var pchild;
-      if(res.trim()!=''){
+      if(inp.trim()!=''){
 
        for(var i=0;i<projects.childNodes.length;i++){
         pchild = project.childNodes[i];
-        if (pchild.id==res && pchild.id!=undefined) {
+        debugger
+        
+        if(pchild.id!=undefined){
+          var pid='';
+          pid=pchild.id;
+          var flag=pid.search(res);
+          if (flag>=0) {
           //alert(pchild.id);
           document.getElementById(pchild.id).style.display='inline';
           j+=1;
         }
-        else if(pchild.id!=res && pchild.id!=undefined){
+        else{
           document.getElementById(pchild.id).style.display='none';
         }
       }
-      if(j<=0){
-        init();
-        alert('No project with name \"'+res+'\" found');
-      }
-      else{
-        var inner=document.getElementById("result")
-        document.getElementById("showAll").disabled ='';
-        document.getElementById("showAll").checked = false;
-        if(j>1)
-          inner.innerText='Showing '+j+' results for \"'+res+'\"';
-        else
-          inner.innerText='Showing '+j+' result for \"'+res+'\"';
-      }
     }
-    return false;
+    if(j<=0){
+      init();
+      alert('No project with name \"'+inp+'\" found');
+    }
+    else{
+      var inner=document.getElementById("result")
+      document.getElementById("showAll").disabled ='';
+      document.getElementById("showAll").checked = false;
+      if(j>1)
+        inner.innerText='Showing '+j+' results for \"'+inp+'\"';
+      else
+        inner.innerText='Showing '+j+' result for \"'+inp+'\"';
+    }
   }
+  return false;
+}
 
 </script>
 </head>

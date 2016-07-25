@@ -196,7 +196,7 @@
 
 
             function createMappingTable() {
-                $.get('milestone.csv', function (data, i) {
+                $.get('https://docs.google.com/spreadsheets/d/1qirkDJzbleexKzLJeEWj9SLRZ5A53v6Qv0sg5OKO618/pub?output=csv', function (data, i) {
                     milestoneList = CSV2JSON(data);
                     var li = "<table class='table table-bordered'>";
                     var rows = data.split("\n");
@@ -219,7 +219,7 @@
 
                 });
 
-                $.get('workstream.csv', function (data, i) {
+                $.get('https://docs.google.com/spreadsheets/d/1I6gyg726hiQt-ARUbJLfBlVO58laYGqJe0hBE4HciQo/pub?output=csv', function (data, i) {
                     workstreamList = CSV2JSON(data);
                     var li = "<table class='table table-bordered'>";
                     var rows = data.split("\n");
@@ -240,7 +240,7 @@
 
                 });
 
-                $.get('activity.csv', function (data, i) {
+                $.get('https://docs.google.com/spreadsheets/d/1I_B4_rJ_mZaLvRM587LdXOQgS7QxXVFPNkLLlLEyDso/pub?output=csv', function (data, i) {
                     activityList = CSV2JSON(data);
 
                     var li = "<table class='table table-bordered'>";
@@ -262,7 +262,7 @@
 
                 });
 
-                $.get('stakeholder.csv', function (data, i) {
+                $.get('https://docs.google.com/spreadsheets/d/1RqCGxXaMwAGfATw0fHOcWaGEB7euO8p7Jzclk0Cw7OM/pub?output=csv', function (data, i) {
 
                     stakeholderList = CSV2JSON(data);
                     var li = " <div class='container'>";

@@ -1,0 +1,899 @@
+<html lang="en">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./lib/jquery.multiselect.css">
+    <link rel="stylesheet" type="text/css" href="./lib/style.css">
+    <link rel="stylesheet" type="text/css" href="./lib/prettify.css">
+    <link rel="stylesheet" type="text/css" href="./lib/jquery-ui.css">
+    <script type="text/javascript" src="./lib/jquery.js"></script>
+    <script type="text/javascript" src="./lib/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./lib/jquery.multiselect.js"></script>
+    <script type="text/javascript" src="./lib/prettify.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./lib/demo.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!-- modernizr -->
+
+    <!-- ad -->
+    <script src="./lib/fusionad.js"></script>
+    <!-- extra style -->
+    <style type="text/css">
+
+        .div-border {
+            border: 1px solid rgb(242, 229, 229);
+        }
+
+        #container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 400px;
+        }
+
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #ddd;
+        }
+  .header {
+                  height: 60px;
+                  background-color: #f9c965;
+              }
+
+    nav {
+      height: 60px;
+      width: 100%;
+      color: #bbb;
+      background: #2e2e2e;
+      font-weight: bold;
+    }
+      nav ul{
+        text-align: center;
+        margin: 0px;
+        height: inherit;
+
+      }
+        nav ul li{
+          display: inline-block;
+          height: inherit;
+          padding-left: 25px;
+          padding-right: 25px;
+          color: white;
+        }
+        nav ul li:hover{
+          background: #00939C;
+        }
+        a:hover {
+          text-decoration: none;
+        }
+        h3{
+          color: #bbb;
+        }
+
+        .content {
+            border-radius: 10px;
+            margin-top: 10px;
+            background-color: #FFFFFF;
+            box-shadow: 0px 0px 4px 4px #E8E8E8;
+        }
+
+        .heading {
+            text-align: center;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            color: white;
+            background-color: #19C3D4;
+            font-family: 'Open Sans', sans-serif;
+            height: 50px;
+            font-size: 30px;
+        }
+
+        .milestones-mapping-container {
+            height: 500px;
+            overflow: auto;
+        }
+
+        .stakeholder-mapping-container {
+            height: 800px;
+            overflow: auto;
+        }
+
+        .workstream-mapping-container {
+            height: 500px;
+            overflow: auto;
+        }
+
+        .activity-mapping-container {
+            height: 500px;
+            overflow: auto;
+        }
+        .count-milestone{
+            font-size: 36px;
+            color: fcca32;
+        }
+        .count-workstream{
+            font-size: 36px;
+            color: 05cdfa;
+        }
+        .count-activity{
+            font-size: 36px;
+            color: 67c9c9;
+        }
+        .count-stakeholder{
+            font-size: 36px;
+            color: ebf0ef;
+        }
+        .count{border-radius: 9px;
+            background-color: 333333;
+            color: 969696;
+              margin-top: 1px;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <nav class="nav">
+      <ul>
+        <li>
+          <a href="./index.html">
+            <h3>
+              Input
+            </h3>
+          </a>
+        </li>
+        <li>
+          <a href="http://vikasnagpal.github.io/gravityBOM/">
+            <img src="./gravity.png">
+            </img>
+          </a>
+        </li>
+        <li>
+          <a href="./stake-holder-mapping.html">
+            <h3>
+              Dashboard
+            </h3>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+    <div class="container">
+        <script>
+            var stakeholderList = [];
+            var activityList = [];
+            var workstreamList = [];
+            var milestoneList = [];
+
+
+            var activityLinkedToMSWS = [];
+            var activityLinkedToMilestone = [];
+            var activityLinkedToWorkstream = [];
+
+
+            var activityNameLinkedToMSWS = [];
+            var activityNameLinkedToMilestone = [];
+            var activityNameLinkedToWorkstream = [];
+
+            var stakeholderLinkedToMSWS = [];
+            var stakeholderLinkedToMilestone = [];
+            var stakeholderLinkedToWorkstream = [];
+
+            var stakeholderNameLinkedToMSWS = [];
+            var stakeholderNameLinkedToMilestone = [];
+            var stakeholderNameLinkedToWorkstream = [];
+
+
+            createMappingTable();
+
+
+            function createMappingTable() {
+                $.get('milestone.csv', function (data, i) {
+                    milestoneList = CSV2JSON(data);
+                    var li = "<table class='table table-bordered'>";
+                    var rows = data.split("\n");
+                    rows.forEach(function getvalues(ourrow, i) {
+                        if (i != 0) {
+                            var columns = ourrow.split(",");
+                            if (columns[0]) {
+                                li += "<tr>";
+                                li+='<td><input type="checkbox" onchange="itemChanged()" class="milestone-mapping-checkbox checkbox-custom" value="' + columns[0] + '" />';
+                                li += "</td>";
+                                li+="<td width='95%'>";
+                                li += columns[0];
+
+                                li += "</td></tr>";
+                            }
+                        }
+                    })
+                    li += "</table>";
+                    $('.milestones-mapping-container').append(li);
+
+                });
+
+                $.get('workstream.csv', function (data, i) {
+                    workstreamList = CSV2JSON(data);
+                    var li = "<table class='table table-bordered'>";
+                    var rows = data.split("\n");
+                    rows.forEach(function getvalues(ourrow, i) {
+                        if (i != 0) {
+                            var columns = ourrow.split(",");
+                            if (columns[0]) {
+                                li += "<tr>";
+                                li+='<td><input type="checkbox" onchange="itemChanged()" class="workstream-mapping-checkbox checkbox-custom" value="' + columns[0] + '" />';
+                                li += "</td><td width='95%'>";
+                                li += columns[0];
+                                li += '</td></tr>';
+                            }
+                        }
+                    })
+                    li += "</tablel>";
+                    $('.workstream-mapping-container').append(li);
+
+                });
+
+                $.get('activity.csv', function (data, i) {
+                    activityList = CSV2JSON(data);
+
+                    var li = "<table class='table table-bordered'>";
+                    var rows = data.split("\n");
+                    rows.forEach(function getvalues(ourrow, i) {
+                        if (i != 0) {
+
+                            var columns = ourrow.split(",");
+                            if (columns[2]) {
+                                li += "<tr><td width='95%' class='activity-mapping-li' value='" + columns[2] + "'>";
+                                li += columns[2];
+                                li += '</td><td><input type="checkbox" onchange="itemChanged()" class="activity-mapping-checkbox checkbox-custom" value="' + columns[2] + '" />';
+                                li += "</td></tr>";
+                            }
+                        }
+                    })
+                    li += "</table>";
+                    $('.activity-mapping-container').append(li);
+
+                });
+
+                $.get('stakeholder.csv', function (data, i) {
+
+                    stakeholderList = CSV2JSON(data);
+                    var li = " <div class='container'>";
+                    li += " <div class='section__content clearfix'>";
+                    var rows = data.split("\n");
+                    rows.forEach(function getvalues(ourrow, i) {
+                        if (i != 0) {
+
+                            var columns = ourrow.split(",");
+                            if (columns[0]) {
+
+                                li += "<div value='" + columns[0].trim() + "' class='card effect__hover stakeholder-mapping-outer-div'>";
+                                li += "<div class='card__front' style ='font-size:14px'>";
+                                if(i%2== 0)
+                                {
+                                   li +="<img src='./robert.png' style='width: 60px;padding-top: 6px;' />";
+                               }else
+                               {
+                                     li +="<img src='./scarlet.png' style='width: 60px;padding-top: 6px;' />";
+                               }
+
+                                li += "<span class='card__text stakeholder-mapping-li' value='" + columns[0].trim() + "'>" + columns[0].trim() + "</span>";
+                                li += "</div>";
+                                li += "<div class='card__back' style='font-weight:bold;font-size:14;box-shadow: 0px 0px 4px 4px #E8E8E8'>";
+                                li += "<span class='card__text'> Influence:" + columns[1] + "<br>" +"Activites:" + columns[2].split('|').length + "</span>";
+                                li += "</div>";
+                                li += "</div> ";
+
+
+                                /*  li += "<li class='stakeholder-mapping-li' value='" + columns[0].trim() + "'>";
+                                  //li += columns[0] + "  -  " + columns[1];
+                                  li += columns[0];
+                                  li += "</li>";*/
+                            }
+                        }
+
+                    })
+                    li += "</div>";
+                    li += "</div>";
+                    $('.stakeholder-mapping-container').append(li);
+
+
+                });
+            }
+
+        </script>
+
+        <!--milestone filters-->
+        <script>
+            function itemChanged() {
+                updateActivityLinkedList();
+                var stakeholderNameLinked = [];
+                var activityNameLinked = [];
+                var isORselected = $("input[name=filterType]:checked").val();
+                if (isORselected == 'true') {
+
+                    for (var y in stakeholderNameLinkedToMilestone) {
+                        if (isNaN(y))
+                            continue;
+                        stakeholderNameLinked.push(stakeholderNameLinkedToMilestone[y].trim());
+                    }
+
+
+                    for (var y in stakeholderNameLinkedToWorkstream) {
+                        if (isNaN(y))
+                            continue;
+                        stakeholderNameLinked.push(stakeholderNameLinkedToWorkstream[y].trim());
+                    }
+
+                    for (var x in activityList) {
+                        if (isNaN(x))
+                            continue;
+                        if (activityList[x].activity) {
+                            if (($.inArray(activityList[x].activity.trim(), activityNameLinkedToMilestone) > -1) || ($.inArray(activityList[x].activity.trim(), activityNameLinkedToWorkstream) > -1)) {
+                                activityNameLinked.push(activityList[x].activity.trim());
+                            }
+                        }
+                    }
+                } else {
+
+                    for (var x in activityList) {
+                        if (isNaN(x))
+                            continue;
+                        if (activityList[x].activity) {
+                            if ($.inArray(activityList[x].activity.trim(), activityNameLinkedToMSWS) > -1) {
+                                activityNameLinked.push(activityList[x].activity.trim());
+                            }
+                        }
+                    }
+
+
+                    for (var y in stakeholderNameLinkedToMSWS) {
+                        if (isNaN(y))
+                            continue;
+                        if (stakeholderLinkedToMSWS[y])
+                            stakeholderNameLinked.push(stakeholderNameLinkedToMSWS[y].trim());
+                    }
+                }
+
+
+
+                var stakeHolderNamesLinkedToActivity = stakeHolderNamesLinkedToCheckedActivity();
+                for (var y in stakeHolderNamesLinkedToActivity) {
+                    if (isNaN(y))
+                        continue;
+                    stakeholderNameLinked.push(stakeHolderNamesLinkedToActivity[y].trim());
+                }
+
+
+
+                $(".stakeholder-mapping-outer-div").hide();
+
+                for (var x in stakeholderList) {
+                    if (isNaN(x))
+                        continue;
+                    if ($.inArray(stakeholderList[x].stakeholder.trim(), stakeholderNameLinked) > -1) {
+                        $('.stakeholder-mapping-outer-div[value="' + stakeholderList[x].stakeholder.trim() + '"]').show();
+                    }
+                }
+
+
+                $(".activity-mapping-li").css("background-color", "");
+
+                for (var x in activityNameLinked) {
+                    if (isNaN(x))
+                        continue;
+                    $('.activity-mapping-li[value="' + activityNameLinked[x].trim() + '"]').css("background-color", "yellow");
+
+                }
+
+
+
+
+
+                //if nothing is selected show every thing
+                var selected = [];
+                $('input[type=checkbox]:checked').each(function () {
+                    selected.push($(this));
+                });
+                if (selected.length == 0)
+                    $(".stakeholder-mapping-outer-div").show();
+
+
+                stakeholderFilter();
+
+            }
+
+            function stakeholderFilter() {
+
+                var selectedInfulence = $("#stakeholder-infulence-filter").val();
+                var stakeholder = [];
+                var visibleLi = $(".stakeholder-mapping-li:visible");
+                if (selectedInfulence) {
+                    for (var i = 0; i < visibleLi.length; i++) {
+                        try {
+
+                            var stakeHolderObj = getStakeHolder($(visibleLi[i]).text().trim());
+                            if (stakeHolderObj.influence != selectedInfulence) {
+                                $(visibleLi[i]).parent().parent().css("display", "none");
+                            }
+                        } catch (err) { }
+                    }
+
+                }
+            }
+
+
+            function updateActivityLinkedList() {
+                var checkedWorkstreams = [];
+                var checkedMilestones = [];
+
+                activityLinkedToMSWS = [];
+                activityLinkedToMilestone = [];
+                activityLinkedToWorkstream = [];
+
+                activityNameLinkedToMSWS = [];
+                activityNameLinkedToMilestone = [];
+                activityNameLinkedToWorkstream = [];
+
+                stakeholderLinkedToMSWS = [];
+                stakeholderLinkedToMilestone = [];
+                stakeholderLinkedToWorkstream = [];
+
+                stakeholderNameLinkedToMSWS = [];
+                stakeholderNameLinkedToMilestone = [];
+                stakeholderNameLinkedToWorkstream = [];
+
+                var mileStoneCheckboxes = $(".milestone-mapping-checkbox");
+
+                for (var x in mileStoneCheckboxes) {
+                    if (isNaN(x))
+                        continue;
+                    if (mileStoneCheckboxes[x].checked) {
+                        checkedMilestones.push(mileStoneCheckboxes[x].value);
+                    }
+                }
+
+                var workstreamCheckboxes = $(".workstream-mapping-checkbox");
+                for (var x in workstreamCheckboxes) {
+                    if (isNaN(x))
+                        continue;
+                    if (workstreamCheckboxes[x].checked) {
+                        checkedWorkstreams.push(workstreamCheckboxes[x].value);
+                    }
+                }
+
+                for (var x in activityList) {
+                    if (isNaN(x))
+                        continue;
+                    if (($.inArray(activityList[x].milestone, checkedMilestones) > -1) && ($.inArray(activityList[x].workstream, checkedWorkstreams) > -1)) {
+                        activityLinkedToMSWS.push(activityList[x]);
+                        activityNameLinkedToMSWS.push(activityList[x].activity);
+
+                        var stakeholders = getStakeHolderForActivity(activityList[x].activity);
+                        if (stakeholders) {
+                            for (var y in stakeholders) {
+                                if (isNaN(y))
+                                    continue;
+                                stakeholderLinkedToMSWS.push(stakeholders[y]);
+                                stakeholderNameLinkedToMSWS.push(stakeholders[y].stakeholder);
+                            }
+                        }
+
+                    }
+
+                    if (($.inArray(activityList[x].milestone, checkedMilestones) > -1)) {
+                        activityLinkedToMilestone.push(activityList[x]);
+                        activityNameLinkedToMilestone.push(activityList[x].activity);
+
+                        var stakeholders = getStakeHolderForActivity(activityList[x].activity);
+                        if (stakeholders) {
+                            for (var y in stakeholders) {
+                                if (isNaN(y))
+                                    continue;
+                                stakeholderLinkedToMilestone.push(stakeholders[y]);
+                                stakeholderNameLinkedToMilestone.push(stakeholders[y].stakeholder);
+                            }
+                        }
+                    }
+
+                    if (($.inArray(activityList[x].workstream, checkedWorkstreams) > -1)) {
+                        activityLinkedToWorkstream.push(activityList[x]);
+                        activityNameLinkedToWorkstream.push(activityList[x].activity);
+
+                        var stakeholders = getStakeHolderForActivity(activityList[x].activity);
+                        if (stakeholders) {
+                            for (var y in stakeholders) {
+                                if (isNaN(y))
+                                    continue;
+                                stakeholderLinkedToWorkstream.push(stakeholders[y]);
+                                stakeholderNameLinkedToWorkstream.push(stakeholders[y].stakeholder);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+            function stakeHolderNamesLinkedToCheckedMileStones() {
+                var mileStoneCheckboxes = $(".milestone-mapping-checkbox");
+                var stakeholderNameLinked = [];
+                for (var x in mileStoneCheckboxes) {
+                    if (isNaN(x))
+                        continue;
+                    if (mileStoneCheckboxes[x].checked) {
+                        var stakeholders = getStakeholderForMilestone(mileStoneCheckboxes[x].value);
+
+                        if (stakeholders) {
+                            for (var y in stakeholders) {
+                                if (isNaN(y))
+                                    continue;
+                                stakeholderNameLinked.push(stakeholders[y].stakeholder);
+                            }
+                        }
+                    }
+                }
+                return stakeholderNameLinked;
+            }
+
+            function getStakeHolder(stakeholderName) {
+                if (stakeholderList == null)
+                    return new Array;
+                var stakeholder = stakeholderList.filter(function (key) {
+                    return key.stakeholder.trim() == stakeholderName;
+                })[0];
+                return stakeholder;
+            }
+
+            function getStakeholderForMilestone(milestones) {
+                var stakeholderNameLinked = [];
+                if (activityList == null)
+                    return new Array;
+                var activityLinked = activityList.filter(function (key) {
+                    return key.milestone == milestones;
+                });
+
+                for (var x in activityLinked) {
+                    if (isNaN(x))
+                        continue;
+                    var stakeholders = getStakeHolderForActivity(activityLinked[x].activity);
+                    if (stakeholders) {
+                        for (var y in stakeholders) {
+                            if (isNaN(y))
+                                continue;
+                            stakeholderNameLinked.push(stakeholders[y]);
+                        }
+                    }
+                }
+                return stakeholderNameLinked;
+            }
+
+
+            function stakeHolderNamesLinkedToCheckedWorkstreams() {
+                var workstreamCheckboxes = $(".workstream-mapping-checkbox");
+                var stakeholderNameLinked = [];
+                for (var x in workstreamCheckboxes) {
+                    if (isNaN(x))
+                        continue;
+                    if (workstreamCheckboxes[x].checked) {
+                        var stakeholders = getStakeholderForworkstream(workstreamCheckboxes[x].value);
+
+                        if (stakeholders) {
+                            for (var y in stakeholders) {
+                                if (isNaN(y))
+                                    continue;
+                                stakeholderNameLinked.push(stakeholders[y].stakeholder);
+                            }
+                        }
+                    }
+                }
+                return stakeholderNameLinked;
+            }
+
+
+            function getStakeholderForworkstream(workstreams) {
+                var stakeholderNameLinked = [];
+                if (activityList == null)
+                    return new Array;
+                var activityLinked = activityList.filter(function (key) {
+                    return key.workstream == workstreams;
+                });
+
+                for (var x in activityLinked) {
+                    if (isNaN(x))
+                        continue;
+                    var stakeholders = getStakeHolderForActivity(activityLinked[x].activity);
+                    if (stakeholders) {
+                        for (var y in stakeholders) {
+                            if (isNaN(y))
+                                continue;
+                            stakeholderNameLinked.push(stakeholders[y]);
+                        }
+                    }
+                }
+                return stakeholderNameLinked;
+            }
+
+
+            function stakeHolderNamesLinkedToCheckedActivity() {
+                var activityCheckboxes = $(".activity-mapping-checkbox");
+                var stakeholderNameLinked = [];
+                for (var x in activityCheckboxes) {
+                    if (isNaN(x))
+                        continue;
+                    if (activityCheckboxes[x].checked) {
+                        var stakeholders = getStakeHolderForActivity(activityCheckboxes[x].value);
+
+                        if (stakeholders) {
+                            for (var y in stakeholders) {
+                                if (isNaN(y))
+                                    continue;
+                                stakeholderNameLinked.push(stakeholders[y].stakeholder);
+                            }
+                        }
+                    }
+                }
+                return stakeholderNameLinked;
+            }
+
+
+            function getStakeHolderForActivity(activityString) {
+                var linkedStakeHolder = [];
+                for (var x in stakeholderList) {
+                    try {
+                        if (isNaN(x) && stakeholderList[x].activity)
+                            continue;
+                        var stakholderActivity = stakeholderList[x].activity.split('|');
+                        if ($.inArray(activityString, stakholderActivity) > -1) {
+                            linkedStakeHolder.push(stakeholderList[x]);
+                        }
+                    } catch (err) { }
+                }
+                return linkedStakeHolder;
+            }
+
+        </script>
+
+
+
+        <div class="col-md-12 count" style="margin-top: 15px;box-shadow: 0px 0px 4px 4px #E8E8E8; height:60px">
+        <div class="row"  style="text-align: center; margin-top: 5px; font-size: 16px">
+            <div class="col-lg-3">
+             <span class='count-milestone' id='milestone-count'></span>&nbsp;&nbsp;<span class="center">Milestones</span>
+            </div>
+             <div class="col-lg-3">
+              <span class='count-workstream'  id='workstream-count'></span>&nbsp;&nbsp; <span class="center">Workstreams</span>
+            </div>
+             <div class="col-lg-3">
+              <span class='count-activity'  id='activity-count'></span> &nbsp;&nbsp;<span class="center">Activities</span>
+            </div>
+             <div class="col-lg-3">
+             <span class='count-stakeholder' id='stakeholder-count'></span>&nbsp;&nbsp;<span class="center">Stakeholders  </span>
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="content">
+                            <div class="heading">
+                                <h1>Milestones</h1>
+                            </div>
+
+                            <div class="milestones-mapping-container">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content">
+                            <div class="heading">
+                                <h1>WorkStream</h1>
+                            </div>
+
+                            <div class="workstream-mapping-container">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content">
+                            <div class="heading">
+                                <h1>Activities</h1>
+                            </div>
+
+                            <div class="activity-mapping-container">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content">
+                            <div class="heading">
+                                <h1>
+                                    Stakeholders
+
+                                </h1>
+                            </div>
+                            <div class="row">
+                <div style="text-align:center">
+
+                    <span>
+
+                                        Filters : Influence &nbsp;&nbsp;
+                                        <select onchange="itemChanged()" id="stakeholder-infulence-filter" class="select-influence-stakeholder">
+                                            <option value="">All</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                        </select>
+                                    </span>
+                                    </div>
+                                    </div>
+                            <div class="stakeholder-mapping-container">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--                 <table class="row">
+                                <thead>
+                                    <tr>
+                                        <td class="col-lg-2  div-border">Milestones</td>
+                                        <td class="col-lg-2  div-border">WorkStream</td>
+                                        <td class="col-lg-2  div-border">Activities</td>
+                                        <td class="col-lg-6  div-border">
+                                            Stakeholders
+                                            <span class="pull-right">
+                                                Influence
+                                                <select onchange="itemChanged()" id="stakeholder-infulence-filter" class="select-influence-stakeholder pull-right">
+                                                    <option value="">All</option>
+                                                    <option value="High">High</option>
+                                                    <option value="Medium">Medium</option>
+                                                    <option value="Low">Low</option>
+                                                </select>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                </thead>
+
+                                <tr>
+                                    <td class="col-lg-2 milestones-mapping-container div-border"></td>
+                                    <td class="col-lg-2 workstream-mapping-container div-border"></td>
+                                    <td class="col-lg-2 activity-mapping-container div-border"></td>
+                                    <td class="col-lg-6 stakeholder-mapping-container div-border"></td>
+                                </tr>
+
+                            </table> -->
+
+        </div>
+    </div>
+
+    </div>
+    <script>
+
+        if (!Array.prototype.filter) {
+            Array.prototype.filter = function (fun /*, thisp*/) {
+                var len = this.length >>> 0;
+                if (typeof fun != "function")
+                    throw new TypeError();
+
+                var res = [];
+                var thisp = arguments[1];
+                for (var i = 0; i < len; i++) {
+                    if (i in this) {
+                        var val = this[i]; // in case fun mutates this
+                        if (fun.call(thisp, val, i, this))
+                            res.push(val);
+                    }
+                }
+                return res;
+            };
+        }
+        function CSV2JSON(csv) {
+            var array = CSVToArray(csv);
+            var objArray = [];
+            for (var i = 1; i < array.length; i++) {
+                objArray[i - 1] = {};
+                for (var k = 0; k < array[0].length && k < array[i].length; k++) {
+                    var key = array[0][k];
+                    objArray[i - 1][key] = array[i][k]
+                }
+            }
+
+            var json = JSON.stringify(objArray);
+            var str = json.replace(/},/g, "},\r\n");
+
+            return JSON.parse(str);
+        }
+        function CSVToArray(strData, strDelimiter) {
+            // Check to see if the delimiter is defined. If not,
+            // then default to comma.
+            strDelimiter = (strDelimiter || ",");
+            // Create a regular expression to parse the CSV values.
+            var objPattern = new RegExp((
+            // Delimiters.
+            "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+            // Quoted fields.
+            "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+            // Standard fields.
+            "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi");
+            // Create an array to hold our data. Give the array
+            // a default empty first row.
+            var arrData = [[]];
+            // Create an array to hold our individual pattern
+            // matching groups.
+            var arrMatches = null;
+            // Keep looping over the regular expression matches
+            // until we can no longer find a match.
+            while (arrMatches = objPattern.exec(strData)) {
+                // Get the delimiter that was found.
+                var strMatchedDelimiter = arrMatches[1];
+                // Check to see if the given delimiter has a length
+                // (is not the start of string) and if it matches
+                // field delimiter. If id does not, then we know
+                // that this delimiter is a row delimiter.
+                if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
+                    // Since we have reached a new row of data,
+                    // add an empty row to our data array.
+                    arrData.push([]);
+                }
+                // Now that we have our delimiter out of the way,
+                // let's check to see which kind of value we
+                // captured (quoted or unquoted).
+                if (arrMatches[2]) {
+                    // We found a quoted value. When we capture
+                    // this value, unescape any double quotes.
+                    var strMatchedValue = arrMatches[2].replace(
+                    new RegExp("\"\"", "g"), "\"");
+                } else {
+                    // We found a non-quoted value.
+                    var strMatchedValue = arrMatches[3];
+                }
+                // Now that we have our value string, let's add
+                // it to the data array.
+                arrData[arrData.length - 1].push(strMatchedValue);
+            }
+            // Return the parsed data.
+            return (arrData);
+        }
+
+            $(document).ready(function(){
+            setTimeout(function()
+            {
+                $("#milestone-count").text(milestoneList.length-1)
+                  $("#workstream-count").text(workstreamList.length-1)
+                    $("#activity-count").text(activityList.length-1)
+                      $("#stakeholder-count").text(stakeholderList.length-1)
+            }, 1000); ;
+            });
+    </script>
+    <div class="row" >
+                <input onchange="itemChanged()" type="radio" checked name="filterType" value="true" id="OR" /> <label for="OR">OR</label>
+                <input onchange="itemChanged()" type="radio" name="filterType" value="false" id="AND" /> <label for="AND">AND</label>
+                </div>
+        <div class="row">
+        <div class="col-md-12">
+            <nav id="navbar" style="text-align:center">
+            </br></br>
+           &#169;Built in Innovation Lab at Gravity
+            </nav>
+        </div>
+        </div>
+</body>
+</html>

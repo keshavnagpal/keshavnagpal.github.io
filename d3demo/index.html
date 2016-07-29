@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>D3.6</title>
+	<!-- <script src="js/d3.js"></script> -->
+
+	<script src="js/d3-v3.js" charset="utf-8"></script>
+
+	<style type="text/css">
+
+		/*responsive svg*/
+		body{
+		
+			overflow: hidden;
+			
+		}
+		.svg-container {
+			display: inline-block;
+			position: relative;
+			width: 100%;
+			padding-bottom: 100%; 
+			vertical-align: top;
+			overflow: hidden;
+
+		}
+		.svg-content-responsive {
+			display: inline-block;
+			position: absolute;
+			top: -2%;
+			left: 0;
+
+		}
+
+		/*hover effect*/
+		.node {
+			cursor: pointer;
+		}
+
+		.node:hover {
+			stroke: #777;
+			stroke-width: 0.7px;
+		}
+
+		.node--leaf {
+			fill: white;
+		}
+
+		.label {
+			font: 1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+			text-anchor: middle;
+			text-shadow: 0 0.7px 0 #fff, 0.7px 0 0 #fff, -0.7px 0 0 #fff, 0 -0.7px 0 #fff;
+			/*pointer-events: none;*/
+		}
+
+		.label,
+		.node--root,
+		.node--leaf {
+			pointer-events: none;
+		}
+		#nav{
+			
+			opacity: 0.5;
+			font: 1.2em "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="nav">
+		<p id="level"></p>
+		<p id="temp">Level 0</p>
+	</div>
+	<script type="text/javascript">
+
+		window.onresize = function(event) {
+			location.reload();
+		};
+
+		//color generator
+		var color = d3.scale.linear()
+			.domain([-2, 10])
+			 .range(["hsl(152,70%,98%)", "hsl(228,50%,50%)"])
+			//.range(["#faffff", "#00e6e6"])
+			.interpolate(d3.interpolateHcl);
+
+		var color2=d3.scale.linear()
+			.domain([1,2])
+			.range(["#ff0","#0f0"])
+			.interpolate(d3.interpolateHcl);;
+
+		var cw=window.innerWidth,
+			ch=window.innerHeight;
+
+		var r = ch-90,
+			margin=5;
+		
+		
+		var pack = d3.layout.pack()
+			.size([r-margin,r-margin])
+			.padding(2)
+			.value(function(d) { return d.value; });
+
+
+		var canvas = d3.select("body")
+
+			.append("div")
+   			.classed("svg-container", true) //container class to make it responsive
+   			.append("svg")
+		    //responsive SVG needs these 2 attributes and no width and height attr
+		    .attr("preserveAspectRatio", "xMinYMin meet")
+		    .attr("viewBox","0 0 " + cw + " " + ch)
+		    //class to make it responsive
+		    .classed("svg-content-responsive", true)
+		    .append("g")
+				 .attr("transform", "translate(" + (cw) / 2 + "," + (ch) / 2 + ")")
+		
+
+
+
+		d3.json("https://api.myjson.com/bins/2hwdn",function(error, root){
+			if (error) throw error;
+			//var root = { name: "name", children: csvdata};
+
+			console.log(root);
+
+			var focus = root,
+				nodes = pack.nodes(root),
+				view;		
+
+			var circle=canvas.selectAll("circle")
+				.data(nodes)
+				.enter()
+				.append("circle")
+				.attr("class",function(d){
+					return (d.parent ? d.children ? "node" : "node node--leaf" : "node node--root");
+				})
+				.style("fill",function(d){
+					return d.children? color(d.depth):"#eee";
+				})
+				.style("stroke",function(d){
+					return d.children? null : color2(d.col);
+				})
+				.style("stroke-width","0.5px")
+				.style("fill-opacity",function(d){
+						return (d.parent == focus? 1 : 0.6);
+					})
+				.on("click",function(d){
+					if(focus!==d) zoom(d), d3.event.stopPropagation();
+				});
+
+			var text = canvas.selectAll("text")
+				.data(nodes)
+				.enter()
+				.append("text")
+				.attr("class","label")
+				.style("fill-opacity",function(d){
+					return d.parent == root? 1:0;
+				})
+				.style("display",function(d){
+					return d.parent == root?"inline":"none";
+				})
+				.text(function(d){
+					return d.name;
+				});
+
+			var node = canvas.selectAll("circle,text");
+
+			d3.select("body")
+				.style("background",color(-2))
+				.on("click",function(){
+					zoom(root);
+				})
+				.on("keydown",function(d){
+					if(d3.event.keyCode=38)
+						zoom(root);
+					});
+
+				zoomTo([root.x, root.y, root.r*2 + margin]);
+
+			function zoom(d){
+				
+				var focus0 = focus,
+					focus = d;
+
+				var transition=d3.transition()
+					.duration(d3.event.altKey ? 5000 : 1000)
+					.tween("zoom",function(d){
+						var i = d3.interpolateZoom(view,[focus.x, focus.y, focus.r*2 + margin]);
+						return function(t){
+							zoomTo(i(t));
+						};
+					});
+				transition.selectAll("circle")
+
+					.style("fill-opacity",function(d){
+						return (d.parent == focus? 1 : 0.5);
+					});
+
+				transition.selectAll("text")
+					.filter(function(d){
+						return (d.parent==focus || this.style.display=="inline");
+					})
+					.style("fill-opacity",function(d){
+						return (d.parent == focus? 1 : 0);
+					})
+					.each("start",function(d){
+						if(d.parent==focus) this.style.display="inline";
+					})
+					.each("end",function(d){
+						if(d.parent!==focus) this.style.display = "none";
+					});
+					var level = document.getElementById("level");
+					var lev='';
+					for(var i=0;i<=focus.depth;i++){
+					lev+='Level '+i+'>';
+					}
+					level.innerText=lev;
+					document.getElementById("temp").style.display="none";
+
+			}
+
+			function zoomTo(v){
+				var k = r/v[2];
+				view = v;
+				node.attr("transform",function(d){
+					return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+				})
+				circle.attr("r",function(d){
+					return d.r * k;
+				})
+				.style("stroke-width",function(d){
+					return k/8;
+				});
+			}
+
+		});
+		d3.select(self.frameElement).style("height", r + "px");
+	</script>
+
+</body>
+</html>

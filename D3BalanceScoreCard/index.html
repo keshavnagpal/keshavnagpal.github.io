@@ -39,7 +39,7 @@
 		}
 
 		.node:hover {
-			stroke: #777;
+			stroke: #555;
 			stroke-width: 0.7px;
 		}
 
@@ -53,13 +53,13 @@
 			text-anchor: middle;
 			background-color: yellow;
 			text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
-			/*pointer-events: none;*/
+			pointer-events: none;
 		}
 
 		.label,
 		.node--root,
 		.node--leaf {
-			pointer-events: none;
+			/*pointer-events: none;*/
 		}
 		#nav{ 
 			opacity: 0.9;
@@ -72,7 +72,7 @@
 			vertical-align: middle;
 		}
 		#nav p{
-			font-weight: bold;
+			font-weight: 300;
 		}
 		
 	</style>
@@ -127,6 +127,7 @@
 			if (error) throw error;
 			//var root = { name: "name", children: csvdata};
 
+			
 			console.log(root);
 
 			var focus = root,
@@ -138,6 +139,7 @@
 				.enter()
 				
 				.append("circle")
+
 				.attr("class",function(d){
 					return (d.parent ? d.children ? "node" : "node node--leaf" : "node node--root");
 				})
@@ -179,9 +181,20 @@
 				})
 
 				.on("click",function(d){
-					if(focus!==d) zoom(d), d3.event.stopPropagation();
+					if(focus!==d){
+						if(d.children){
+							zoom(d), d3.event.stopPropagation();
+						}
+						else{
+							zoom(d.parent), d3.event.stopPropagation();
+						}
+					}
 				});
 
+			canvas.selectAll("circle")
+				.data(nodes)
+				.append("svg:title")
+				.text(function(d) { return d.name; });
 			var text = canvas.selectAll("text")
 				.data(nodes)
 				.enter()
@@ -195,19 +208,28 @@
 				})
 				.text(function(d){
 					return d.name;
+				})
+				.each(function (d) {
+					var self = d3.select(this),
+					textLength = self.node().getComputedTextLength(),
+					text = self.text();
+					while (textLength > (d.r*1.5) && text.length > 0) {
+						text = text.slice(0, -1);
+						self.text(text + '..');
+						textLength = self.node().getComputedTextLength();
+					}
 				});
 
+			 
+
+			
 			var node = canvas.selectAll("circle,text");
 
 			d3.select("body")
 				.style("background",color(-2))
 				.on("click",function(){
 					zoom(root);
-				})
-				.on("keydown",function(d){
-					if(d3.event.keyCode=38)
-						zoom(root);
-					});
+				});
 
 				zoomTo([root.x, root.y, root.r*2 + margin]);
 
@@ -220,9 +242,9 @@
 					.duration(d3.event.altKey ? 5000 : 1000)
 					.tween("zoom",function(d){
 						var i = d3.interpolateZoom(view,[focus.x, focus.y, focus.r*2 + margin]);
-						return function(t){
-							zoomTo(i(t));
-						};
+							return function(t){
+								zoomTo(i(t));
+							};
 					});
 				transition.selectAll("circle")
 
@@ -238,36 +260,48 @@
 					.style("fill-opacity",function(d){
 						return (d.parent == focus? 1 : 0);
 					})
+					// .each(function (d) {
+					// 	var self = d3.select(this),
+					// 	textLength = self.node().getComputedTextLength(),
+					// 	text = self.text();
+
+					// 	while (textLength > (d.r*(r/focus.r*2)) && text.length > 0) {
+					// 		text = text.slice(0, -1);
+					// 		self.text(text + '..');
+					// 		textLength = self.node().getComputedTextLength();
+					// 	}
+					// })
 					.each("start",function(d){
 						if(d.parent==focus) this.style.display="inline";
 					})
 					.each("end",function(d){
 						if(d.parent!==focus) this.style.display = "none";
+
 					});
 
 					var level = document.getElementById("nav");
 					var lev='';
 					
 						if(d.depth==1){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.name+')';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						else if(d.depth==2 && d.parent.name=="Internal"){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.name+')';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						else if(d.depth==2){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.name+')';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						else if(d.depth==3 && d.parent.parent.name=="Internal"){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.name+')';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						else if(d.depth==3){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						else if(d.depth==4){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						else if(d.depth==4){
-							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.parent.name+'<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'';
+							lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.parent.name+'<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
 						}
 						
 					level.innerHTML='<p><i class="material-icons home">home</i> Balanced ScoreCard'+lev+'</p>';
@@ -280,17 +314,32 @@
 				view = v;
 				node.attr("transform",function(d){
 					return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
-				})
+				});
 				circle.attr("r",function(d){
 					return d.r * k;
 				})
 				.style("stroke-width",function(d){
-					return k/10;
+					return k/8;
 				});
+				d3.selectAll("text")
+					.each(function (d) {
+						var self = d3.select(this),
+						textLength = self.node().getComputedTextLength(),
+						text = self.text();
+						
+						while (textLength > (d.r*k*d.r) && text.length > 0) {
+							console.log("running...");
+							text = text.slice(0, -1);
+							self.text(text + '..');
+							textLength = self.node().getComputedTextLength();
+						}
+					})
+
+					
 			}
 
 		});
-		d3.select(self.frameElement).style("height", r + "px");
+	d3.select(self.frameElement).style("height", r + "px");
 	</script>
 
 </body>

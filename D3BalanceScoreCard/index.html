@@ -3,6 +3,7 @@
 <head>
 	<title>D3.6</title>
 	<!-- <script src="js/d3.js"></script> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="js/d3-v3.js" charset="utf-8"></script>
@@ -198,10 +199,10 @@
 					var att='';
 					if(d.attributes){
 						for(var i = 0;i<d.attributes.length;i++){
-							att+='\n'+d.attributes[i].at;
+							att+='\n• '+d.attributes[i].at;
 						}
 						if(att.trim().length>0)
-						return d.name!=='Parent'? d.name+' Attributes\n'+att : null;
+						return d.name!=='Parent'? ''+d.name+'\n—————————\nAttributes'+att : null;
 						else{
 							return d.name!=='Parent'?d.name : null;
 						}

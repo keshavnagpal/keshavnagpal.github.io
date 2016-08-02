@@ -123,7 +123,7 @@
 
 
 
-		d3.json("https://jsonblob.com/api/jsonBlob/579b31ace4b0dc55a4e8be07",function(error, root){
+		d3.json("gravityj.json",function(error, root){
 			if (error) throw error;
 			//var root = { name: "name", children: csvdata};
 
@@ -194,7 +194,23 @@
 			canvas.selectAll("circle")
 				.data(nodes)
 				.append("svg:title")
-				.text(function(d) { return d.name; });
+				.text(function(d) {
+					var att='';
+					if(d.attributes){
+						for(var i = 0;i<d.attributes.length;i++){
+							att+='\n'+d.attributes[i].at;
+						}
+						if(att.trim().length>0)
+						return d.name!=='Parent'? d.name+' Attributes\n'+att : null;
+						else{
+							return d.name!=='Parent'?d.name : null;
+						}
+
+					}
+					else{
+						return d.name!=='Parent'? d.name : null;
+					}
+				});
 			var text = canvas.selectAll("text")
 				.data(nodes)
 				.enter()

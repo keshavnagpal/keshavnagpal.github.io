@@ -9,14 +9,12 @@
     if (annyang) {
 
       var sayThis = function(obj) {
-        
-        if(obj=='internal')console.log('internal');
-        else console.log(obj);
+        console.log(obj);
       }
 
       // Let's define a command.
       var commands = {
-        'show(take me to the)me :obj': sayThis
+        'hello :obj': sayThis
       };
 
       // Turn on debugging for the console

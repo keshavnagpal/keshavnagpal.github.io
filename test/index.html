@@ -8,9 +8,9 @@
 <script type="text/javascript">
   if (annyang) {
 
-    var sayThis = function(repeat) {
+    var sayThis = function(tag) {
         //console.log(repeat);
-        var chl = repeat.split(" ");
+        var chl = tag.split(" ");
         for(var i=0 ; i<chl.length ; i++){
           if(ch[i]=='internal'){
             console.log('internal working');
@@ -20,11 +20,11 @@
 
       // Let's define a command.
       var commands = {
-        'show me (take me to) *repeat': sayThis
+        'show me (take me to) *tag': sayThis
       };
 
       // Turn on debugging for the console
-      annyang.debug();
+      //annyang.debug();
 
       // Initialize annyang with our commands
       annyang.init(commands);

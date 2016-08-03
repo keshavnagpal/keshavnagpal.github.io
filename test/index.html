@@ -1,27 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-  <script>
-//var report = '';
-if (annyang) {
-  // Let's define our first command. First the text we expect, and then the function it should call
- var helloFunction =  function(name){
-    console.log(name);
-  }
-  var commands = {'hello :name': helloFunction, 'howdy': helloFunction};
-  var commands2 = {'hi': helloFunction};
-
-  annyang.init(commands);
-  annyang.addCommands(commands2);
-// annyang will now listen to all three commands
-
-  // Start listening. You can call this here, or attach this call to an event, button, etc.
-  annyang.start();
-}
-</script>
-</body>
 <html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script>
+  </head>
+  <body>
+
+  </body>
+  <script type="text/javascript">
+    if (annyang) {
+
+      var sayThis = function(repeat) {
+        console.log(repeat);
+      }
+
+      // Let's define a command.
+      var commands = {
+        'hello :repeat': sayThis
+      };
+
+      // Turn on debugging for the console
+      annyang.debug();
+
+      // Initialize annyang with our commands
+      annyang.init(commands);
+
+      // Start listening.
+      annyang.start();
+    }
+  </script>
+</html>

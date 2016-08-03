@@ -8,17 +8,17 @@
   <script type="text/javascript">
     if (annyang) {
 
-      var sayThis = function(obj) {
-        console.log(obj);
+      var sayThis = function(repeat) {
+        console.log(repeat);
       }
 
       // Let's define a command.
       var commands = {
-        'hello :obj': sayThis
+        'hello :repeat': sayThis
       };
 
       // Turn on debugging for the console
-      // annyang.debug();
+      annyang.debug();
 
       // Initialize annyang with our commands
       annyang.init(commands);

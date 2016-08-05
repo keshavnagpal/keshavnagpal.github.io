@@ -180,7 +180,7 @@
 				// 	return d.children? null : color2(d.col);
 				// })
 				.style("stroke-width","0.2px")
-				.style("fill-opacity",function(d){
+				.style("fill-opacity",function(d){//debugger
 					if(d.depth>1)return d.parent == focus? 1 : 0.5;
 						return (d.parent == focus? 1 : 0.8);
 				})
@@ -337,8 +337,8 @@
 				zoomTo([root.x, root.y, root.r*2 + margin]);
 
 			function zoom(d){
-				
-				var focus0 = focus,
+				debugger
+				var focus0 = focus;
 					focus = d;
 
 				var transition=d3.transition()

@@ -3,10 +3,12 @@
 <head>
 	<title>D3.6</title>
 	<!-- <script src="js/d3.js"></script> -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="js/d3-v3.js" charset="utf-8"></script>
+
 
 	<style type="text/css">
 
@@ -84,9 +86,9 @@
 	</div>
 	<script type="text/javascript">
 
-		window.onresize = function(event) {
-			location.reload();
-		};
+		// window.onresize = function(event) {
+		// 	location.reload();
+		// };
 
 		//color generator
 		var color = d3.scale.linear()
@@ -100,6 +102,8 @@
 
 		var r = ch-90,
 			margin=5;
+
+		var small = null;
 		
 		
 		var pack = d3.layout.pack()
@@ -109,7 +113,7 @@
 
 
 		var canvas = d3.select("body")
-
+			//To make the svg responsive
 			.append("div")
    			.classed("svg-container", true) //container class to make it responsive
    			.append("svg")
@@ -146,7 +150,7 @@
 				})
 				.style("stroke",function(d){
 					if(!d.children){
-						if(Math.random()>0.4){
+						if(Math.random()>0.5){
 							return "red";
 						}
 						else{
@@ -180,7 +184,30 @@
 					if(d.depth>1)return d.parent == focus? 1 : 0.5;
 						return (d.parent == focus? 1 : 0.8);
 				})
+				.on("mouseover", function(d,i) {
+					
+					if(small == null){
+						if(d.parent!=undefined){debugger
+							if(d.parent==focus)
+								small = childcircle(canvas,d,i);
+							else{
+								if(small!=null){
+									small.transition()
+									.remove();
+									small=null;
+								}
+							}							
+						}
+					}
+				})
+				.on("mouseout", function(d,i) {
+					if(small!=null){
+						small.transition()
+						.remove();
+						small=null;
+					}
 
+				})
 				.on("click",function(d){
 					if(focus!==d){
 						if(d.children){
@@ -192,26 +219,27 @@
 					}
 				});
 
-			canvas.selectAll("circle")
-				.data(nodes)
-				.append("svg:title")
-				.text(function(d) {
-					var att='';
-					if(d.attributes){
-						for(var i = 0;i<d.attributes.length;i++){
-							att+='\n• '+d.attributes[i].at;
-						}
-						if(att.trim().length>0)
-						return d.name!=='Parent'? ''+d.name+'\n—————————\nAttributes'+att : null;
-						else{
-							return d.name!=='Parent'?d.name : null;
-						}
+			// canvas.selectAll("circle")
+			// 	.data(nodes)
+			// 	.append("svg:title")
+			// 	.text(function(d) {
+			// 		var att='';
+			// 		if(d.attributes){
+			// 			for(var i = 0;i<d.attributes.length;i++){
+			// 				att+='\n• '+d.attributes[i].at;
+			// 			}
+			// 			if(att.trim().length>0)
+			// 			return d.name!=='Parent'? ''+d.name+'\n—————————\nAttributes'+att : null;
+			// 			else{
+			// 				return d.name!=='Parent'?d.name : null;
+			// 			}
 
-					}
-					else{
-						return d.name!=='Parent'? d.name : null;
-					}
-				});
+			// 		}
+			// 		else{
+			// 			return d.name!=='Parent'? d.name : null;
+			// 		}
+			// 	});
+			
 			var text = canvas.selectAll("text")
 				.data(nodes)
 				.enter()
@@ -237,7 +265,65 @@
 					}
 				});
 
-			 
+			 function childcircle(currentCanvas,d,i)
+         {
+         	//debugger
+         	
+         	var datachild = d.attributes;
+         	var currentX  = d.x;
+         	var currentY  = d.y;
+         	var radius = d.r;
+         	
+         	
+         	
+         	var smallerCircles = currentCanvas.selectAll('g')
+         	.data(datachild)
+         	.enter()
+         	.append('circle')
+         	.attr("class","childcircle")
+         	.attr('fill', '#00e6e6')
+         	.attr('fill-opacity','0.5') 
+         	.attr('cx', function (d, i)
+         	{
+         		//var angle = (i / (datachild.length/2) * Math.PI) ;   
+         		//return ((gap/1.1) * Math.sin(angle)) + parseInt(currentX/50); 
+         		var angle = ((i+1)*(2*Math.PI)/datachild.length);
+         		return (radius * Math.cos(angle) + parseInt(currentX-(cw/4.4)));
+         		
+         		
+         	})
+         	.attr('cy', function (d, i)
+         	{
+         		//var angle = (i / (datachild.length/2) * Math.PI);         
+         		//return ((gap/1.1) * Math.cos(angle)) + parseInt(currentY/50);
+
+         		var angle = ((i+1)*(2*Math.PI)/datachild.length);
+         		return (radius * Math.sin(angle) + parseInt(currentY-(ch/2.2))); 
+         	})
+         	
+         	
+         	.attr('r', function(d){
+         		return radius/datachild.length;
+         	})
+         	
+         	.on("mouseover", function(d,i) {
+         		transition.selectAll(".childcircle")
+					.style("fill-opacity",0.5);       		
+         		
+         	})
+         	
+         	.on("mouseout", function(d,i) {
+         		transition.selectAll(".childcircle")
+					.style("fill-opacity",0.5);
+         		
+         	})
+         	
+         	.on("click",function(d,i)
+         	{ 
+    
+         	})
+         	return smallerCircles;
+         }
 
 			
 			var node = canvas.selectAll("circle,text");
@@ -269,6 +355,8 @@
 						if(d.depth>1)return d.parent == focus? 1 : 0.5;
 						return (d.parent == focus? 1 : 0.8);
 					});
+
+
 
 				transition.selectAll("text")
 					.filter(function(d){

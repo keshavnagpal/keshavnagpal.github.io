@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>D3.6</title>
+	<!-- <script src="js/d3.js"></script> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script src="js/d3-v3.js" charset="utf-8"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script> -->
+	<!-- <script type="text/javascript" scr="https://code.jquery.com/jquery-3.1.0.min.js"></script> -->
+
+	<style type="text/css">
+
+		/*responsive svg*/
+		body{
+
+			overflow: hidden;
+			font-family: 'Roboto', sans-serif;
+			
+		}
+		.svg-container {
+			display: inline-block;
+			position: relative;
+			width: 100%;
+			padding-bottom: 100%; 
+			vertical-align: top;
+			overflow: hidden;
+
+		}
+		.svg-content-responsive {
+			display: inline-block;
+			position: absolute;
+			top: -2.5%;
+			left: 0;
+
+		}
+
+		/*hover effect*/
+		.node {
+			cursor: pointer;
+		}
+
+		.node:hover {
+			stroke: #555;
+			stroke-width: 0.7px;
+		}
+
+		.node--leaf {
+			fill: white;
+		}
+
+		.label {
+			font-size: 1.2em;
+			font-weight: 300;
+			text-anchor: middle;
+			background-color: yellow;
+			text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+			pointer-events: none;
+		}
+
+		.label,
+		.node--root,
+		.node--leaf {
+			/*pointer-events: none;*/
+		}
+		#nav{ 
+			opacity: 0.9;
+		}
+		.home{
+			
+			font-size: 2.5em;
+		}
+		.material-icons{
+			vertical-align: middle;
+		}
+		#nav p{
+			font-weight: 300;
+		}
+		/*main{
+			display:none;
+		}*/
+		#results {
+			
+			padding: 5px;
+			text-align: left;
+		}
+		.final {
+			color: black;
+		}
+		.interim {
+			color: gray;
+		}
+		#start_button{
+			padding: 5px 17px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 15px;
+			margin: 0px 0px;
+			-webkit-transition-duration: 0.4s; /* Safari */
+			transition-duration: 0.4s;
+			cursor: pointer;
+			background-color: #faffff;
+			color: #555;
+			border: 1px solid #00e6e6;
+		}
+		#start_button:hover {
+			background-color: #00e6e6;
+			border: 1px solid #faffff;
+			color: white;
+		}
+		.langSelect{
+
+			padding: 4px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 15px;
+			margin: 0px 0px;
+			-webkit-transition-duration: 0.4s; /* Safari */
+			transition-duration: 0.4s;
+			cursor: pointer;
+			background-color: #faffff;
+			color: #555;
+			border: 1px solid #00e6e6;
+		}		
+		
+	</style>
+</head>
+<body>
+	<main>
+
+		<div id="info" class="flow-text">
+			
+			<p id="info_speak_now">Speak now. Then p ress C to confirm command</p>
+			<p id="info_no_speech">No speech was detected. You may need to adjust your<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.</p>
+			<p id="info_no_microphone" style="display:none">No microphone was found. Ensure that a microphone is installed and that<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a> are configured correctly.</p>
+			<p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
+			<p id="info_denied">Permission to use microphone was denied.</p>
+			<p id="info_blocked">Permission to use microphone is blocked. To change, go to chrome://settings/contentExceptions#media-stream</p>
+			<p id="info_upgrade">Web Speech API is not supported by this browser.Upgrade to <a href="//www.google.com/chrome">Chrome</a>version 25 or later.</p>
+		</div>
+		<br>
+		<button id="start_button" onclick="startButton(event)">Click To Start
+		</button>
+
+		
+		<select class="langSelect" id="select_language" onchange="updateCountry()"></select>
+		&nbsp;&nbsp;
+		<select class="langSelect" id="select_dialect"></select>
+
+		<div id="results">
+			<span id="final_span" class="final"></span>
+			<span id="interim_span" class="interim"></span>
+		</div>
+	</main>
+	<div id="nav">
+		<p><i class="material-icons home">home</i> Balanced ScoreCard</p>
+	</div>
+	<script type="text/javascript">
+
+		window.onresize = function(event) {
+			location.reload();
+		};
+		var c =[],
+			obj='';
+
+		//color generator
+		var color = d3.scale.linear()
+		.domain([-2, 4])
+			//.range(["hsl(152,70%,98%)", "hsl(228,50%,50%)"])
+			.range(["#faffff", "#00e6e6"])
+			.interpolate(d3.interpolateHcl);
+
+			var cw=window.innerWidth,
+			ch=window.innerHeight-80;
+
+			var r = ch-90,
+			margin=5;
+
+
+			var pack = d3.layout.pack()
+			.size([r-margin,r-margin])
+			.padding(2)
+			.value(function(d) { return d.value; });
+
+
+			var canvas = d3.select("body")
+
+			.append("div")
+   			.classed("svg-container", true) //container class to make it responsive
+   			.append("svg")
+		    //responsive SVG needs these 2 attributes and no width and height attr
+		    .attr("preserveAspectRatio", "xMinYMin meet")
+		    .attr("viewBox","0 0 " + cw + " " + ch)
+		    //class to make it responsive
+		    .classed("svg-content-responsive", true)
+		    .append("g")
+		    .attr("transform", "translate(" + (cw) / 2 + "," + (ch) / 2 + ")")
+
+
+
+
+		    d3.json("gravityj.json",function(error, root){
+		    	if (error) throw error;
+			//var root = { name: "name", children: csvdata};
+
+			
+			console.log(root);
+
+			var focus = root,
+			nodes = pack.nodes(root),
+			view;		
+
+
+			var circle=canvas.selectAll("circle")
+			.data(nodes)
+			.enter()
+
+			.append("circle")
+
+			.attr("class",function(d){
+				c.push(d.name);
+
+				return (d.parent ? d.children ? "node" : "node node--leaf" : "node node--root");
+			})
+			.style("stroke",function(d){
+				if(!d.children){
+					if(Math.random()>0.4){
+						return "red";
+					}
+					else{
+						return "green";
+					}
+				}
+			})
+			.style("fill",function(d){
+					//console.log(d.children[0].name);
+					if(!d.children){
+						return "eeffff";
+					}
+					if(d.depth==2 && d.parent.name=="Internal"){
+						return color(-1);
+					}
+					else if(d.depth==3 && d.parent.parent.name=="Internal"){
+						return color(d.depth-1);
+					}
+					else if(d.depth==4 && d.parent.parent.parent.name=="Internal"){
+						return color(d.depth-1);
+					}
+					else{
+						return color(d.depth);
+					}
+				})
+				// .style("stroke",function(d){
+				// 	return d.children? null : color2(d.col);
+				// })
+				.style("stroke-width","0.2px")
+				.style("fill-opacity",function(d){
+					if(d.depth>1)return d.parent == focus? 1 : 0.5;
+					return (d.parent == focus? 1 : 0.8);
+				})
+
+				.on("click",function(d){
+					if(focus!==d){
+						//debugger
+						if(d.children){
+							zoom(d), d3.event.stopPropagation();
+						}
+						else{
+							zoom(d.parent), d3.event.stopPropagation();
+						}
+					}
+				});
+
+				//adding attributes here
+				canvas.selectAll("circle")
+				.data(nodes)
+				.append("svg:title")
+				.text(function(d) {
+					var att='';
+					if(d.attributes){
+						for(var i = 0;i<d.attributes.length;i++){
+							att+='\n• '+d.attributes[i].at;
+						}
+						if(att.trim().length>0)
+							return d.name!=='Parent'? ''+d.name+'\n—————————\nAttributes'+att : null;
+						else{
+							return d.name!=='Parent'?d.name : null;
+						}
+
+					}
+					else{
+						return d.name!=='Parent'? d.name : null;
+					}
+				});
+				var text = canvas.selectAll("text")
+				.data(nodes)
+				.enter()
+				.append("text")
+				.attr("class","label")
+				.style("fill-opacity",function(d){
+					return d.parent == root? 1:0;
+				})
+				.style("display",function(d){
+					return d.parent == root?"inline":"none";
+				})
+				.text(function(d){
+					return d.name;
+				})
+				.each(function (d) {
+					var self = d3.select(this),
+					textLength = self.node().getComputedTextLength(),
+					text = self.text();
+					while (textLength > (d.r*1.5) && text.length > 0) {
+						text = text.slice(0, -1);
+						self.text(text + '..');
+						textLength = self.node().getComputedTextLength();
+					}
+				});
+
+
+				var node = canvas.selectAll("circle,text");
+
+				d3.select("body")
+				.style("background",color(-2))
+				.on("click",function(){
+					zoom(root);
+				});
+
+				zoomTo([root.x, root.y, root.r*2 + margin]);
+
+
+				d3.json("gravityj.json",function(error, data){
+					var nodess = pack.nodes(data);
+
+					d3.select("body")
+					.data(nodess)
+
+					.on("keydown", function(d){
+						//debugger
+						
+						// if(d.name=='Internal')
+						for(var i = 0 ; i <nodess.length;i++){
+
+							//console.log(nodess[i].name);
+
+							if(nodess[i].name==obj){
+								if(!nodess[i].children[0].children){
+									if(nodess[i].parent.name == focus.name){
+										if(nodess[i].children){
+											zoom(nodess[i]), d3.event.stopPropagation();
+										}
+										else{
+											zoom(nodess[i].parent), d3.event.stopPropagation();
+										}
+									}
+								}
+								else{
+									if(nodess[i].children){
+										zoom(nodess[i]), d3.event.stopPropagation();
+									}
+									else{
+										zoom(nodess[i].parent), d3.event.stopPropagation();
+									}
+								}
+							}
+						}
+					    document.getElementById("final_span").innerText='';
+					    document.getElementById("interim_span").innerText='';
+					    interim_transcript='';
+					    final_transcript='';
+					    interim='';
+					    final='';
+					});
+
+
+				});
+
+				function zoom(d){
+					console.log(d);
+					var focus0 = focus;
+					focus = d;
+
+					var transition=d3.transition()
+					.duration(d3.event.altKey ? 5000 : 1000)
+					.tween("zoom",function(d){
+						var i = d3.interpolateZoom(view,[focus.x, focus.y, focus.r*2 + margin]);
+						return function(t){
+							zoomTo(i(t));
+						};
+					});
+					transition.selectAll("circle")
+
+					.style("fill-opacity",function(d){
+						if(d.depth>1)return d.parent == focus? 1 : 0.5;
+						return (d.parent == focus? 1 : 0.8);
+					});
+
+					transition.selectAll("text")
+					.filter(function(d){
+						if(d.parent!= null){
+							return (d.parent.x==focus.x || this.style.display=="inline");
+						}
+						
+					})
+					.style("fill-opacity",function(d){
+						if(d.parent!= null)						 
+							return (d.parent.x==focus.x? 1 : 0);
+					})
+					// .each(function (d) {
+					// 	var self = d3.select(this),
+					// 	textLength = self.node().getComputedTextLength(),
+					// 	text = self.text();
+
+					// 	while (textLength > (d.r*(r/focus.r*2)) && text.length > 0) {
+					// 		text = text.slice(0, -1);
+					// 		self.text(text + '..');
+					// 		textLength = self.node().getComputedTextLength();
+					// 	}
+					// })
+					.each("start",function(d){
+						if(d.parent!= null){
+							if(d.parent.x==focus.x) 
+								this.style.display="inline";
+						}
+					})
+					.each("end",function(d){
+						if(d.parent!= null){
+							if(d.parent.x!=focus.x) 
+								this.style.display = "none";
+						}
+					});
+
+					var level = document.getElementById("nav");
+					var lev='';
+					
+					if(d.depth==1){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+					else if(d.depth==2 && d.parent.name=="Internal"){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+					else if(d.depth==2){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+					else if(d.depth==3 && d.parent.parent.name=="Internal"){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.name+')<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+					else if(d.depth==3){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+					else if(d.depth==4){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Sub-Perspective('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+					else if(d.depth==4){
+						lev+='<i class="material-icons">subdirectory_arrow_right</i>Perspective('+d.parent.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>Objectives('+d.parent.parent.name+')<i class="material-icons">subdirectory_arrow_right</i>'+d.parent.name+'<i class="material-icons">subdirectory_arrow_right</i>'+d.name+'<span style="float:right;font-weight:bold;font-size:1.2em;">'+d.name+'</span>';
+					}
+
+					level.innerHTML='<p><i class="material-icons home">home</i> Balanced ScoreCard'+lev+'</p>';
+					
+
+				}
+
+				function zoomTo(v){
+					var k = r/v[2];
+					view = v;
+					node.attr("transform",function(d){
+						return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+					});
+					circle.attr("r",function(d){
+						return d.r * k;
+					})
+					.style("stroke-width",function(d){
+						return k/8;
+					});
+					d3.selectAll("text")
+					.each(function (d) {
+						var self = d3.select(this),
+						textLength = self.node().getComputedTextLength(),
+						text = self.text();
+						
+						while (textLength > (d.r*k*d.r) && text.length > 0) {
+							
+							text = text.slice(0, -1);
+							self.text(text + '..');
+							textLength = self.node().getComputedTextLength();
+						}
+					})
+
+					
+				}
+
+			});
+d3.select(self.frameElement).style("height", r + "px");
+
+function nlp(input){
+	//debugger
+	obj='';
+	var ch = '';
+	ch=input;
+	var chl=[];
+	chl=ch.split(" ");
+	listCap = flist;
+	var temp='';
+	var flag = 0;
+	for(var i=0;i<chl.length;i++){
+		if(chl[i]!='show' || chl[i]!='me' || chl[i]!='take' || chl[i]!='go' || chl[i]!='back'){
+			for(var j=0;j<c.length;j++){
+				// if(chl[i]=='learning'){
+				// 		obj='Learning and Growth';
+				// 		break;
+				// 	}
+
+				//to handle names having spaces
+				temp = c[j].split(" ");
+
+				if(temp.length>1){
+					var k =0;
+					for (var s=0;s<temp.length;s++){
+						temp[s]=temp[s].toLowerCase();
+					}
+					
+					for(var l = 0; l<chl.length;l++){
+						if(chl[l]==temp[0]){
+							for(k =0 ; k<temp.length;k++){
+								//debugger
+								if(chl[l+k]==temp[k]){
+									flag+=1;
+
+								}
+							}
+
+							if(flag==k){
+								obj=c[j];
+								break;
+							}
+						}
+					}
+				}
+				if(chl[i] == c[j].toLowerCase()){
+
+					obj = c[j];
+					//console.log("C"+c[j]);
+					//console.log('obj'+obj);
+				}
+			}
+		}
+	} 
+		//automatically start search without keypress
+		// var e = $.Event('keypress');
+  		//e.which = 65; // Character 'A'
+  		//$('item').trigger(e);
+  	}
+
+
+var langs =
+		[['Afrikaans',       ['af-ZA']],
+		['Bahasa Indonesia',['id-ID']],
+		['Bahasa Melayu',   ['ms-MY']],
+		['Català',          ['ca-ES']],
+		['Čeština',         ['cs-CZ']],
+		['Deutsch',         ['de-DE']],
+		['English',         ['en-AU', 'Australia'],
+		['en-CA', 'Canada'],
+		['en-IN', 'India'],
+		['en-NZ', 'New Zealand'],
+		['en-ZA', 'South Africa'],
+		['en-GB', 'United Kingdom'],
+		['en-US', 'United States']],
+		['Español',         ['es-AR', 'Argentina'],
+		['es-BO', 'Bolivia'],
+		['es-CL', 'Chile'],
+		['es-CO', 'Colombia'],
+		['es-CR', 'Costa Rica'],
+		['es-EC', 'Ecuador'],
+		['es-SV', 'El Salvador'],
+		['es-ES', 'España'],
+		['es-US', 'Estados Unidos'],
+		['es-GT', 'Guatemala'],
+		['es-HN', 'Honduras'],
+		['es-MX', 'México'],
+		['es-NI', 'Nicaragua'],
+		['es-PA', 'Panamá'],
+		['es-PY', 'Paraguay'],
+		['es-PE', 'Perú'],
+		['es-PR', 'Puerto Rico'],
+		['es-DO', 'República Dominicana'],
+		['es-UY', 'Uruguay'],
+		['es-VE', 'Venezuela']],
+		['Euskara',         ['eu-ES']],
+		['Français',        ['fr-FR']],
+		['Galego',          ['gl-ES']],
+		['Hrvatski',        ['hr_HR']],
+		['IsiZulu',         ['zu-ZA']],
+		['Íslenska',        ['is-IS']],
+		['Italiano',        ['it-IT', 'Italia'],
+		['it-CH', 'Svizzera']],
+		['Magyar',          ['hu-HU']],
+		['Nederlands',      ['nl-NL']],
+		['Norsk bokmål',    ['nb-NO']],
+		['Polski',          ['pl-PL']],
+		['Português',       ['pt-BR', 'Brasil'],
+		['pt-PT', 'Portugal']],
+		['Română',          ['ro-RO']],
+		['Slovenčina',      ['sk-SK']],
+		['Suomi',           ['fi-FI']],
+		['Svenska',         ['sv-SE']],
+		['Türkçe',          ['tr-TR']],
+		['български',       ['bg-BG']],
+		['Pусский',         ['ru-RU']],
+		['Српски',          ['sr-RS']],
+		['한국어',            ['ko-KR']],
+		['中文',             ['cmn-Hans-CN', '普通话 (中国大陆)'],
+		['cmn-Hans-HK', '普通话 (香港)'],
+		['cmn-Hant-TW', '中文 (台灣)'],
+		['yue-Hant-HK', '粵語 (香港)']],
+		['日本語',           ['ja-JP']],
+		['Lingua latīna',   ['la']]];
+
+
+
+		var interim_transcript='';
+		var interim='';
+		var final='';
+
+var listCap=[];
+
+var obj='';
+
+var flist=[];
+
+
+for (var i = 0; i < langs.length; i++) {
+	select_language.options[i] = new Option(langs[i][0], i);
+}
+select_language.selectedIndex = 6;
+updateCountry();
+select_dialect.selectedIndex = 0;
+showInfo('info_start');
+
+function updateCountry() {
+	for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+		select_dialect.remove(i);
+	}
+	var list = langs[select_language.selectedIndex];
+	for (var i = 1; i < list.length; i++) {
+		select_dialect.options.add(new Option(list[i][1], list[i][0]));
+	}
+	select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+}
+
+
+var final_transcript = '';
+var recognizing = false;
+var ignore_onend;
+var start_timestamp;
+if (!('webkitSpeechRecognition' in window)) {
+	upgrade();
+} else {
+	start_button.style.display = 'inline-block';
+	var recognition = new webkitSpeechRecognition();
+	recognition.continuous = true;
+	recognition.interimResults = true;
+
+	recognition.onstart = function() {
+		recognizing = true;
+		showInfo('info_speak_now');
+		
+	};
+
+	recognition.onerror = function(event) {
+		if (event.error == 'no-speech') {
+			
+			showInfo('info_no_speech');
+			ignore_onend = true;
+		}
+		if (event.error == 'audio-capture') {
+			
+			showInfo('info_no_microphone');
+			ignore_onend = true;
+		}
+		if (event.error == 'not-allowed') {
+			if (event.timeStamp - start_timestamp < 100) {
+				showInfo('info_blocked');
+			} else {
+				showInfo('info_denied');
+			}
+			ignore_onend = true;
+		}
+	};
+
+	recognition.onend = function() {
+		recognizing = false;
+		if (ignore_onend) {
+			return;
+		}
+		
+		if (!final_transcript) {
+			showInfo('info_start');
+			return;
+		}
+		
+		showInfo('');
+		if (window.getSelection) {
+			window.getSelection().removeAllRanges();
+			range = document.createRange();
+			range.selectNode(document.getElementById('final_span'));
+			window.getSelection().addRange(range);
+		}
+	};
+
+	recognition.onresult = function(event) {
+    // debugger
+    interim_transcript = '';
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+    	if (event.results[i].isFinal) {
+    		
+    		final_transcript += event.results[i][0].transcript;
+    		nlp(final_transcript);
+    	} else {
+    		interim_transcript += event.results[i][0].transcript;
+    	}
+    }
+    final_transcript = capitalize(final_transcript);
+    final_span.innerHTML = linebreak(final_transcript);
+    interim_span.innerHTML = linebreak(interim_transcript);
+    
+    event.results.length=0;
+
+};
+}
+
+function upgrade() {
+	start_button.style.visibility = 'hidden';
+	showInfo('info_upgrade');
+}
+
+var two_line = /\n\n/g;
+var one_line = /\n/g;
+function linebreak(s) {
+	return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+}
+
+var first_char = /\S/;
+function capitalize(s) {
+	return s.replace(first_char, function(m) { return m.toUpperCase(); });
+}
+
+
+function startButton(event) {
+	if (recognizing) {
+		recognition.stop();
+		return;
+	}
+	final_transcript = '';
+	recognition.lang = select_dialect.value;
+	recognition.start();
+	ignore_onend = false;
+	final_span.innerHTML = '';
+	interim_span.innerHTML = '';
+
+	showInfo('info_allow');
+	start_timestamp = event.timeStamp;
+}
+
+function showInfo(s) {
+	if (s) {
+		for (var child = info.firstChild; child; child = child.nextSibling) {
+			if (child.style) {
+				child.style.display = child.id == s ? 'inline' : 'none';
+			}
+		}
+		info.style.visibility = 'visible';
+	} else {
+		info.style.visibility = 'hidden';
+	}
+}
+</script>
+
+</body>
+</html>

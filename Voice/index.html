@@ -133,7 +133,7 @@
 
 		<div id="info" class="flow-text">
 			
-			<p id="info_speak_now">Speak now. Then p ress C to confirm command</p>
+			<p id="info_speak_now">Speak now. Then press C to confirm command</p>
 			<p id="info_no_speech">No speech was detected. You may need to adjust your<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.</p>
 			<p id="info_no_microphone" style="display:none">No microphone was found. Ensure that a microphone is installed and that<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a> are configured correctly.</p>
 			<p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
@@ -160,9 +160,9 @@
 	</div>
 	<script type="text/javascript">
 
-		window.onresize = function(event) {
-			location.reload();
-		};
+		// window.onresize = function(event) {
+		// 	location.reload();
+		// };
 		var c =[],
 			obj='';
 
@@ -340,40 +340,62 @@
 
 					.on("keydown", function(d){
 						//debugger
-						
-						// if(d.name=='Internal')
+
 						for(var i = 0 ; i <nodess.length;i++){
 
 							//console.log(nodess[i].name);
 
-							if(nodess[i].name==obj){
-								if(!nodess[i].children[0].children){
-									if(nodess[i].parent.name == focus.name){
-										if(nodess[i].children){
+						// 	if(nodess[i].name==obj){
+						// 		if(!nodess[i].children[0].children){
+						// 			if(nodess[i].parent.x == focus.x){
+						// 				if(nodess[i].children){
+						// 					zoom(nodess[i]), d3.event.stopPropagation();
+						// 				}
+						// 				else{
+						// 					zoom(nodess[i].parent), d3.event.stopPropagation();
+						// 				}
+						// 			}
+						// 		}
+						// 		else{
+						// 			if(nodess[i].children){
+						// 				zoom(nodess[i]), d3.event.stopPropagation();
+						// 			}
+						// 			else{
+						// 				zoom(nodess[i].parent), d3.event.stopPropagation();
+						// 			}
+						// 		}
+						// 	}
+						// }
+
+						if(nodess[i].name==obj){
+
+							if(nodess[i].children){
+								if(nodess[i].depth > 2){debugger
+									if(nodes[i].parent){
+										if(nodess[i].parent.x == focus.x || nodess[i].parent.x == focus.parent.x){
 											zoom(nodess[i]), d3.event.stopPropagation();
-										}
-										else{
-											zoom(nodess[i].parent), d3.event.stopPropagation();
 										}
 									}
 								}
 								else{
-									if(nodess[i].children){
-										zoom(nodess[i]), d3.event.stopPropagation();
-									}
-									else{
-										zoom(nodess[i].parent), d3.event.stopPropagation();
-									}
+									zoom(nodess[i]), d3.event.stopPropagation();
 								}
 							}
+							else{
+								zoom(nodess[i].parent), d3.event.stopPropagation();
+							}
+
 						}
-					    document.getElementById("final_span").innerText='';
-					    document.getElementById("interim_span").innerText='';
-					    interim_transcript='';
-					    final_transcript='';
-					    interim='';
-					    final='';
-					});
+
+					}
+					document.getElementById("final_span").innerText='';
+					document.getElementById("interim_span").innerText='';
+					interim_transcript='';
+					final_transcript='';
+					interim='';
+					final='';
+
+				});
 
 
 				});
@@ -409,17 +431,6 @@
 						if(d.parent!= null)						 
 							return (d.parent.x==focus.x? 1 : 0);
 					})
-					// .each(function (d) {
-					// 	var self = d3.select(this),
-					// 	textLength = self.node().getComputedTextLength(),
-					// 	text = self.text();
-
-					// 	while (textLength > (d.r*(r/focus.r*2)) && text.length > 0) {
-					// 		text = text.slice(0, -1);
-					// 		self.text(text + '..');
-					// 		textLength = self.node().getComputedTextLength();
-					// 	}
-					// })
 					.each("start",function(d){
 						if(d.parent!= null){
 							if(d.parent.x==focus.x) 
@@ -508,10 +519,6 @@ function nlp(input){
 	for(var i=0;i<chl.length;i++){
 		if(chl[i]!='show' || chl[i]!='me' || chl[i]!='take' || chl[i]!='go' || chl[i]!='back'){
 			for(var j=0;j<c.length;j++){
-				// if(chl[i]=='learning'){
-				// 		obj='Learning and Growth';
-				// 		break;
-				// 	}
 
 				//to handle names having spaces
 				temp = c[j].split(" ");

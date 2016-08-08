@@ -1,5 +1,5 @@
 {
-	"name": "Parent",
+	"name": "Home",
 	"children": [
 		{
 			"name":"Financial",
@@ -16,22 +16,22 @@
 						{
 							"name": "Initiatives",
 							"children": [
-								{"name": "InitiativeAlpha1","value": 2536,"col":2},
-								{"name": "InitiativeAlpha2","value": 3254,"col":2},
-								{"name": "InitiativeAlpha3","value": 1253,"col":2},
-								{"name": "InitiativeAlpha4","value": 2536,"col":2},
-								{"name": "InitiativeAlpha5","value": 3254,"col":2}
+								{"name": "InitiativeAlpha1","value": 2536},
+								{"name": "InitiativeAlpha2","value": 3254},
+								{"name": "InitiativeAlpha3","value": 1253},
+								{"name": "InitiativeAlpha4","value": 2536},
+								{"name": "InitiativeAlpha5","value": 3254}
 							]
 
 						}, 
 						{
-							"name": "Measures(KPI)",
+							"name": "Measures",
 							"children": [
 
-								{"name": "MeasuresAlpha1","value": 1023,"col":1},
-								{"name": "MeasuresAlpha2","value": 3126,"col":1},
-								{"name": "MeasuresAlpha3","value": 2000,"col":1},
-								{"name": "MeasuresAlpha4","value": 3126,"col":1}
+								{"name": "MeasuresAlpha1","value": 1023},
+								{"name": "MeasuresAlpha2","value": 3126},
+								{"name": "MeasuresAlpha3","value": 2000},
+								{"name": "MeasuresAlpha4","value": 3126}
 							]
 
 						}
@@ -50,12 +50,13 @@
 
 						}, 
 						{
-							"name": "Measures(KPI)",
+							"name": "Measures",
 							"children": [
 
-								{"name": "Reliable Departures","value": 4236},
-						
-								{"name": "very low ticket prices","value": 1253}
+								{"name": "MeasuresAlpha1","value": 2023},
+								{"name": "MeasuresAlpha2","value": 1126},
+								{"name": "MeasuresAlpha3","value": 1000},
+								{"name": "MeasuresAlpha4","value": 2126}
 							]
 
 						}
@@ -74,14 +75,13 @@
 
 						}, 
 						{
-							"name": "Measures(KPI)",
+							"name": "Measures",
 							"children": [
 
-								{"name": "Reliable Departures","value": 4236},
-								{"name": "MeasuresAlpha1","value": 1023},
-								{"name": "MeasuresAlpha2","value": 3126},
-								{"name": "MeasuresAlpha3","value": 2000},
-								{"name": "very low ticket prices","value": 1253}
+								{"name": "MeasuresAlpha1","value": 2023},
+								{"name": "MeasuresAlpha2","value": 1126},
+								{"name": "MeasuresAlpha3","value": 1000},
+								{"name": "MeasuresAlpha4","value": 826}
 							]
 
 						}
@@ -110,12 +110,11 @@
 
 						}, 
 						{
-							"name": "Measures(KPI)",
+							"name": "Measures",
 							"children": [
 
-								{"name": "Reliable Departures","value": 4236},
-								{"name": "Comparable to other travel","value": 3500},
-								{"name": "very low ticket prices","value": 1253}
+								{"name": "MeasuresAlpha1","value": 1023},
+								{"name": "MeasuresAlpha2","value": 1126}
 							]
 
 						}
@@ -135,12 +134,12 @@
 
 						}, 
 						{
-							"name": "Measures(KPI)",
+							"name": "Measures",
 							"children": [
 
-								{"name": "Reliable Departures","value": 4236},
-								{"name": "Comparable to other travel","value": 3000},
-								{"name": "very low ticket prices","value": 1253}
+								{"name": "MeasuresAlpha1","value": 1023},
+								{"name": "MeasuresAlpha2","value": 826},
+								{"name": "MeasuresAlpha3","value": 3000}
 							]
 
 						}
@@ -161,12 +160,12 @@
 
 						}, 
 						{
-							"name": "Measures(KPI)",
+							"name": "Measures",
 							"children": [
 
-								{"name": "Reliable Departures","value": 4236},
-								{"name": "Comparable to other travel","value": 2000},
-								{"name": "very low ticket prices","value": 1253}
+								{"name": "MeasuresAlpha1","value": 1023},
+								{"name": "MeasuresAlpha2","value": 2126},
+								{"name": "MeasuresAlpha3","value": 900}
 							]
 
 						}
@@ -188,19 +187,21 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 2500},
-									{"name": "Comparable to other travel","value": 2521},
-									{"name": "very low ticket prices","value": 1253}
+									{"name": "InitiativeAlpha1","value": 2536},
+									{"name": "InitiativeAlpha2","value": 3254},
+									{"name": "InitiativeAlpha3","value": 1253}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-						
-									{"name": "Comparable to other travel","value": 2000},
-									{"name": "very low ticket prices","value": 2410}
+
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 3126},
+									{"name": "MeasuresAlpha3","value": 2000},
+									{"name": "MeasuresAlpha4","value": 3126}
 								]
 
 							}
@@ -209,19 +210,18 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 836},
-									
-									{"name": "very low ticket prices","value": 3000}
+									{"name": "InitiativeAlpha1","value": 2536},
+									{"name": "InitiativeAlpha2","value": 1254}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Reliable Departures","value": 500},
-									{"name": "Comparable to other travel","value": 3256},
-									{"name": "very low ticket prices","value": 2456}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 1126},
+									{"name": "MeasuresAlpha3","value": 2000}
 								]
 
 							}
@@ -238,12 +238,11 @@
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Reliable Departures","value": 2564},
-									{"name": "CComparable to other travel","value": 2562},
-									{"name": "very low ticket prices","value": 3115}
+									{"name": "MeasuresAlpha1","value": 2023},
+									{"name": "MeasuresAlpha2","value": 2126}
 								]
 
 							}
@@ -257,19 +256,20 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 700},
-									
-									{"name": "very low ticket prices","value": 1253}
+									{"name": "InitiativeAlpha1","value": 2536},
+									{"name": "InitiativeAlpha2","value": 1254},
+									{"name": "InitiativeAlpha3","value": 1253}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Reliable Departures","value": 2456},
 									
-									{"name": "very low ticket prices","value": 800}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 2126},
+									{"name": "MeasuresAlpha3","value": 2000}
 								]
 
 							}
@@ -278,20 +278,20 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 1235},
-									{"name": "Comparable to other travel","value": 2546},
-									{"name": "very low ticket prices","value": 750}
+									{"name": "InitiativeAlpha1","value": 1536},
+									{"name": "InitiativeAlpha2","value": 1254},
+									{"name": "InitiativeAlpha3","value": 1253}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Reliable Departures","value": 1356},
-									{"name": "Comparable to other travel","value": 1899},
-									{"name": "Reliable Departures","value": 3214},
-									{"name": "very low ticket prices","value": 1500}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 3126},
+									{"name": "MeasuresAlpha3","value": 2000},
+									{"name": "MeasuresAlpha4","value": 1126}
 								]
 
 							}
@@ -305,20 +305,19 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 1564},
-									
-									{"name": "very low ticket prices","value": 2546}
+									{"name": "InitiativeSigma1","value": 2423},
+									{"name": "InitiativeSigma2","value": 1234},
+									{"name": "InitiativeSigma3","value": 900}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Reliable Departures","value": 1563},
-									{"name": "Reliable Departures","value": 2111},
-									{"name": "Comparable to other travel","value": 3000},
-									{"name": "very low ticket prices","value": 1253}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 2126},
+									{"name": "MeasuresAlpha3","value": 2000}
 								]
 
 							}
@@ -327,19 +326,19 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 3236},
-									
-									{"name": "very low ticket prices","value": 2253}
+									{"name": "InitiativeSigma1","value": 2423},
+									{"name": "InitiativeSigma2","value": 1234}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Reliable Departures","value": 2456},
-									
-									{"name": "very low ticket prices","value": 1253}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 1126},
+									{"name": "MeasuresAlpha3","value": 2000},
+									{"name": "MeasuresAlpha4","value": 1126}
 								]
 
 							}
@@ -348,18 +347,20 @@
 							{
 								"name": "Initiatives",
 								"children": [
-									{"name": "Reliable Departures","value": 2236},
-									
-									{"name": "very low ticket prices","value": 1253}
+									{"name": "InitiativeSigma1","value": 2423},
+									{"name": "InitiativeSigma2","value": 1234},
+									{"name": "InitiativeSigma3","value": 900}
 								]
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
-									{"name": "Comparable to other travel","value": 3564},
-									{"name": "very low ticket prices","value": 1253}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 1126},
+									{"name": "MeasuresAlpha3","value": 1000},
+									{"name": "MeasuresAlpha4","value": 2126}
 								]
 
 							}
@@ -376,12 +377,12 @@
 
 							}, 
 							{
-								"name": "Measures(KPI)",
+								"name": "Measures",
 								"children": [
 
 									
-									{"name": "Reliable Departures","value": 2520},
-									{"name": "very low ticket prices","value": 3568}
+									{"name": "MeasuresAlpha1","value": 1023},
+									{"name": "MeasuresAlpha2","value": 1126}
 								]
 
 							}
@@ -393,8 +394,8 @@
 {
 	"name":"Learning and Growth",
 	"attributes":[
-				{"at":"L&G-attr1: Value"}
-			],
+		{"at":"L&G-attr1: Value"}
+	],
 	"children":[
 		{
 			"name":"High compensation ",
@@ -402,21 +403,22 @@
 				{
 					"name": "Initiatives",
 					"children": [
-						{"name": "Reliable Departures","value": 2546},
-						{"name": "Comparable to other travel","value": 2456},
+						{"name": "InitiativeSigma1","value": 2423},
+						{"name": "InitiativeSigma2","value": 1234},
+						{"name": "InitiativeSigma3","value": 900},
 						{"name": "InitiativeTheta2","value": 900},
-						{"name": "InitiativeTheta3","value": 1423},
-						{"name": "very low ticket prices","value": 800}
+						{"name": "InitiativeTheta3","value": 1423}
 					]
 
 				}, 
 				{
-					"name": "Measures(KPI)",
+					"name": "Measures",
 					"children": [
 
-						{"name": "Reliable Departures","value": 1235},
-						{"name": "Comparable to other travel","value": 2136},
-						{"name": "very low ticket prices","value": 2564}
+						{"name": "MeasuresAlpha1","value": 1023},
+						{"name": "MeasuresAlpha2","value": 1126},
+						{"name": "MeasuresAlpha3","value": 2000},
+						{"name": "MeasuresAlpha4","value": 2126}
 					]
 
 				}
@@ -436,12 +438,13 @@
 
 				}, 
 				{
-					"name": "Measures(KPI)",
+					"name": "Measures",
 					"children": [
 
-						{"name": "Reliable Departures","value": 4569},
-						
-						{"name": "very low ticket prices","value": 1253}
+						{"name": "MeasuresAlpha1","value": 1023},
+						{"name": "MeasuresAlpha2","value": 1126},
+						{"name": "MeasuresAlpha3","value": 1000},
+						{"name": "MeasuresAlpha4","value": 1126}
 					]
 
 				}
@@ -453,20 +456,19 @@
 				{
 					"name": "Initiatives",
 					"children": [
-						{"name": "Reliable Departures","value": 1236},
-					
-						{"name": "very low ticket prices","value": 1253}
+						{"name": "InitiativeSigma1","value": 423},
+						{"name": "InitiativeSigma2","value": 1234},
+						{"name": "InitiativeSigma3","value": 900}
 					]
 
 				}, 
 				{
-					"name": "Measures(KPI)",
+					"name": "Measures",
 					"children": [
 
-						{"name": "Reliable Departures","value": 800},
-						{"name": "CComparable to other travel","value": 2523},
-						{"name": "travel","value": 2456},
-						{"name": "very low ticket prices","value": 3216}
+						{"name": "MeasuresAlpha1","value": 2023},
+						{"name": "MeasuresAlpha2","value": 1126},
+						{"name": "MeasuresAlpha3","value": 2000}
 					]
 
 				}
@@ -478,18 +480,18 @@
 				{
 					"name": "Initiatives",
 					"children": [
-						{"name": "Reliable Departures","value": 1500},
-						{"name": "Comparable to other travel","value": 2512},
-						{"name": "very low ticket prices","value": 2500}
+						{"name": "InitiativeSigma1","value": 1423},
+						{"name": "InitiativeSigma2","value": 2234},
+						{"name": "InitiativeSigma3","value": 1500}
 					]
 
 				}, 
 				{
-					"name": "Measures(KPI)",
+					"name": "Measures",
 					"children": [
 
-						{"name": "Reliable Departures","value": 2568},
-						{"name": "very low ticket prices","value": 4236}
+						{"name": "MeasuresAlpha1","value": 1023},
+						{"name": "MeasuresAlpha2","value": 1126}
 					]
 
 				}

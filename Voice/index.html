@@ -220,9 +220,7 @@
 
 		    d3.json("https://jsonblob.com/api/jsonBlob/579b31ace4b0dc55a4e8be07",function(error, root){
 		    	if (error) throw error;
-			//var root = { name: "name", children: csvdata};
-
-			
+					
 			console.log(root);
 
 			var focus = root,
@@ -360,7 +358,7 @@
 						for(var i = 0 ; i <nodess.length;i++){
 
 							//console.log(nodess[i].name);
-							
+
 						if(nodess[i].name==obj){
 
 							if(nodess[i].children){

@@ -7,7 +7,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="js/d3-v3.js" charset="utf-8"></script>
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js"></script> -->
 	<!-- <script type="text/javascript" scr="https://code.jquery.com/jquery-3.1.0.min.js"></script> -->
 
 	<style type="text/css">
@@ -131,9 +130,9 @@
 <body>
 	<main>
 
-		<div id="info" class="flow-text">
+		<div id="info">
 			
-			<p id="info_speak_now">Speak now. Then press C to confirm command</p>
+			<p id="info_speak_now">Speak now. Then p ress C to confirm command</p>
 			<p id="info_no_speech">No speech was detected. You may need to adjust your<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.</p>
 			<p id="info_no_microphone" style="display:none">No microphone was found. Ensure that a microphone is installed and that<a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a> are configured correctly.</p>
 			<p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
@@ -142,7 +141,7 @@
 			<p id="info_upgrade">Web Speech API is not supported by this browser.Upgrade to <a href="//www.google.com/chrome">Chrome</a>version 25 or later.</p>
 		</div>
 		<br>
-		<button id="start_button" onclick="startButton(event)">Click To Start
+		<button id="start_button" onclick="init(event)">Click To Start
 		</button>
 
 		
@@ -163,6 +162,23 @@
 		// window.onresize = function(event) {
 		// 	location.reload();
 		// };
+		var buttonClick = false;
+		function init(event){
+
+			var beforeClick = "Click to Start",
+			afterClick="Click to Stop";
+			if(!buttonClick){
+				document.getElementById('start_button').innerText = afterClick;
+				buttonClick=true;
+			}
+			else{
+				document.getElementById('start_button').innerText = beforeClick;
+				buttonClick = false;
+			}
+			startButton(event);
+
+
+		}
 		var c =[],
 			obj='';
 
@@ -344,33 +360,11 @@
 						for(var i = 0 ; i <nodess.length;i++){
 
 							//console.log(nodess[i].name);
-
-						// 	if(nodess[i].name==obj){
-						// 		if(!nodess[i].children[0].children){
-						// 			if(nodess[i].parent.x == focus.x){
-						// 				if(nodess[i].children){
-						// 					zoom(nodess[i]), d3.event.stopPropagation();
-						// 				}
-						// 				else{
-						// 					zoom(nodess[i].parent), d3.event.stopPropagation();
-						// 				}
-						// 			}
-						// 		}
-						// 		else{
-						// 			if(nodess[i].children){
-						// 				zoom(nodess[i]), d3.event.stopPropagation();
-						// 			}
-						// 			else{
-						// 				zoom(nodess[i].parent), d3.event.stopPropagation();
-						// 			}
-						// 		}
-						// 	}
-						// }
-
+							
 						if(nodess[i].name==obj){
 
 							if(nodess[i].children){
-								if(nodess[i].depth > 2){debugger
+								if(nodess[i].depth > 2){//debugger
 									if(nodes[i].parent){
 										if(nodess[i].parent.x == focus.x || nodess[i].parent.x == focus.parent.x){
 											zoom(nodess[i]), d3.event.stopPropagation();
@@ -554,11 +548,7 @@ function nlp(input){
 				}
 			}
 		}
-	} 
-		//automatically start search without keypress
-		// var e = $.Event('keypress');
-  		//e.which = 65; // Character 'A'
-  		//$('item').trigger(e);
+	}
   	}
 
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>DashBoard Maker</title>
+
+  <!-- CSS  -->
+  
+  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.gridster/0.5.6/jquery.gridster.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+  <style type="text/css">
+    #printableArea{position: absolute;top:7%;left:1%;width: 595px;height: 852px;}
+  </style>
+
+</head>
+<body class="blue lighten-5">
+  <nav class="blue" role="navigation">
+        <div class="nav-wrapper container">
+          <a id="logo-container" href="#" class="brand-logo white-text">DashBoard Maker</a>
+          <ul class="right hide-on-med-and-down">
+          <li>
+            <a href="PortraitJQ.html" class=" btn waves-effect waves-light white-text blue darken-1">Reset</a>
+          </li>
+          </ul>
+          </div>
+  </nav>
+
+  <main>
+
+
+<div id="printableArea">
+   <div class="gridster">
+    <ul>
+          <li id="li1" data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="blue"></li>
+          <li id="li2" data-row="1" data-col="3" data-sizex="2" data-sizey="2" class="red"></li>
+          <li id="li3" data-row="1" data-col="4" data-sizex="2" data-sizey="1" class="blue"></li>
+          <li id="li4" data-row="2" data-col="5" data-sizex="1" data-sizey="2" class="yellow"></li>
+          <li id="li5" data-row="2" data-col="6" data-sizex="3" data-sizey="2" class="orange"></li>
+          <li id="li6" data-row="3" data-col="1" data-sizex="1" data-sizey="1" class="blue"></li>
+          <li id="li7" data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="green"></li>
+          <li id="li8" data-row="3" data-col="3" data-sizex="2" data-sizey="1" class="blue"></li>
+          <li id="li9" data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="red"></li>
+          <li id="li10" data-row="4" data-col="3" data-sizex="2" data-sizey="1" class="blue"></li>
+          <li id="li11" data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="red"></li>
+          <li id="li12" data-row="4" data-col="2" data-sizex="1" data-sizey="2" class="red"></li>
+          <li id="li13" data-row="5" data-col="2" data-sizex="1" data-sizey="2" class="red"></li>
+    </ul>
+    </div>
+    </div>
+   
+
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.gridster/0.5.6/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+
+
+  var gridster;
+
+      $(function(){
+
+        gridster = $(".gridster ul").gridster({
+          widget_base_dimensions: [100, 100],
+          widget_margins: [5, 5],
+          max_cols:6,
+          max_rows:10,
+          helper: 'clone',
+          avoid_overlapped_widgets: true,
+          resize: {
+            enabled: true,
+            max_size:[4,4]
+          }
+        }).data('gridster');
+
+      });</script>
+
+  </body>
+</html>

@@ -13,7 +13,7 @@ void setup() {
 
 int score=0;
 void draw() {
-  background(score*10,score*10,score*10); 
+  background(50); 
   if(mouseY<height-45 && mouseY>40){
     mY=mouseY;
   }

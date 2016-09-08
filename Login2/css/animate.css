@@ -205,3 +205,8 @@ form button:hover {
             transform: translateY(-700px) rotate(600deg);
   }
 }
+footer{
+  position: absolute;
+  top: 84%;
+  left: 46%;
+}

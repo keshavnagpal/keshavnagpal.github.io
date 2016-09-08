@@ -53,7 +53,7 @@
 		}
 		.blackbutton {
 			position: relative;
-			left:45%;	
+			left:40%;	
 			padding: 14px 28px;
 			text-align: center;
 			text-decoration: none;
@@ -72,13 +72,27 @@
 			color: black;
 			border: 1px solid #26a69a;
 		}
+		.blackbutton2 {
+			position: relative;
+			left:40%;	
+			padding: 1px 2px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 25px;
+			margin: 4px 2px;
+			border:none;
+			background-color: transparent;
+			cursor: pointer;
+			color: black	
+		}
 		form{
 			height:100vh;
 			opacity: 0.8;
 		}
 	</style>
 </head>
-<body class="grey lighten-3">
+<body>
 
 </nav>
 
@@ -88,80 +102,82 @@
 		<canvas id="demo-canvas"></canvas>
 
 		<div class="row main-title container">
-		
-				<form id="mainForm" class="col s6 white" action="tiles.html">
-					<div class="row">
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
+
+			<form id="mainForm" class="col s6 white" action="tiles.html">
+				<div class="row">
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+					<div class="input-field col s12 m12">
+					</div>
+				</div>
+				<button class="blackbutton2" type="submit" name="action">Welcome</button>
+				<div class="row">
+					
+					<div class="input-field col s2">
 
 					</div>
-					<div class="row">
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
+					<div class="input-field col s8">
+
+						<input id="last_name" type="text" class="validate black-text" required="required">
+						<label for="user_name">Username</label>
+					</div>
+					<div class="input-field col s2">
 
 					</div>
-					<div class="row">
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s2">
 
 					</div>
-					<div class="row">
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
-						<div class="input-field col s12 m12">
-						</div>
+					<div class="input-field col s8">
+
+						<input id="password" type="password" class="validate black-text" required="required">
+						<label for="password">Password</label>
 					</div>
-					<div class="row">
-						<div class="input-field col s2">
+					<div class="input-field col s2">
 
-						</div>
-						<div class="input-field col s8">
-							<i class="material-icons prefix">account_circle</i>
-							<input id="last_name" type="text" class="validate black-text" required="required">
-							<label for="user_name">Username</label>
-						</div>
-						<div class="input-field col s2">
-
-						</div>
 					</div>
-					<div class="row">
-						<div class="input-field col s2">
-
-						</div>
-						<div class="input-field col s8">
-							<i class="material-icons prefix">fingerprint</i>
-							<input id="password" type="password" class="validate black-text" required="required">
-							<label for="password">Password</label>
-						</div>
-						<div class="input-field col s2">
-
-						</div>
-					</div>
-					<button class="blackbutton" type="submit" name="action">Login</button>
+				</div>
+				<button class="blackbutton" type="submit" name="action">Login</button>
 				
 				<!-- <a href="" target="_blank"><img src="assets/gravitylogoSmall.png"></a> -->
 			</form>

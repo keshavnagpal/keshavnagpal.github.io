@@ -207,6 +207,6 @@ form button:hover {
 }
 footer{
   position: absolute;
-  top: 84%;
-  left: 46%;
+  bottom: 5%;
+  left: 48%;
 }

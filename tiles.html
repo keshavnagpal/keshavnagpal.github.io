@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Project Showcase</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+	<title>Project Showcase</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <script type="text/javascript">
+	<!-- CSS  -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<script type="text/javascript">
 
-    function init(){
+		function init(){
       //debugger
       var inner=document.getElementById("result");
       inner.innerText='';
       var project=document.getElementById("projects");
       var pchild;
       for(var i=0;i<projects.childNodes.length;i++){
-        pchild = project.childNodes[i];
-        if(pchild.id!=undefined){
-          document.getElementById(pchild.id).style.display='inline';
-        }
+      	pchild = project.childNodes[i];
+      	if(pchild.id!=undefined){
+      		document.getElementById(pchild.id).style.display='inline';
+      	}
       }
       document.getElementById("showAll").disabled ='disabled';
-    }
+  }
 
-    function filter(){
+  function filter(){
       //debugger
       var j=0;
       var inner=document.getElementById("result");
@@ -38,248 +38,268 @@
       var pchild;
       if(inp.trim()!=''){
 
-        document.getElementById("showAll").disabled ='';
-        document.getElementById("showAll").checked = false;
+      	document.getElementById("showAll").disabled ='';
+      	document.getElementById("showAll").checked = false;
 
-        for(var i=0;i<projects.childNodes.length;i++){
-          pchild = project.childNodes[i];
+      	for(var i=0;i<projects.childNodes.length;i++){
+      		pchild = project.childNodes[i];
         //debugger
         if(pchild.id!=undefined){
-          var pid='';
-          pid=pchild.id.toLowerCase();
-          var flag=pid.search(res);
-          if (flag>=0) {
+        	var pid='';
+        	pid=pchild.id.toLowerCase();
+        	var flag=pid.search(res);
+        	if (flag>=0) {
           //alert(pchild.id);
           document.getElementById(pchild.id).style.display='inline';
           j+=1;
-        }
-        else{
-          document.getElementById(pchild.id).style.display='none';
-        }
       }
-    }
-    if(j<=0){
+      else{
+      	document.getElementById(pchild.id).style.display='none';
+      }
+  }
+}
+if(j<=0){
       // init();
       inner.innerText='Showing '+j+' results for \"'+inp+'\"';
       // alert('No project with name \"'+inp+'\" found');
-    }
-    else{
-      if(j>1)
-        inner.innerText='Showing '+j+' results for \"'+inp+'\"';
-      else
-        inner.innerText='Showing '+j+' result for \"'+inp+'\"';
-    }
   }
-  return false;
+  else{
+  	if(j>1)
+  		inner.innerText='Showing '+j+' results for \"'+inp+'\"';
+  	else
+  		inner.innerText='Showing '+j+' result for \"'+inp+'\"';
+  }
+}
+return false;
 }
 
 </script>
 </head>
 <body class="">
 	<nav class="grey darken-3" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="index.html" class="brand-logo white-text">Project Showcase</a>
-      <ul class="right hide-on-med-and-down">
-        <!-- <li><a href="index.html" class="white-text">Home</a></li>  -->
-        <li><a href="https://github.com/keshavnagpal" class="white-text" target="_blank">Go to my Github</a></li>
-        <li><a href="docs/KeshavNagpalResume.pdf" class="white-text" target="_blank">Download my Resume</a></li>
-        <li><a href="https://in.linkedin.com/in/keshavnagpal" class="white-text" target="_blank">Connect with LinkedIn</a></li>
-      </ul>
+		<div class="nav-wrapper container">
+			<a id="logo-container" href="index.html" class="brand-logo white-text">Project Showcase</a>
+			<ul class="right hide-on-med-and-down">
+				<!-- <li><a href="index.html" class="white-text">Home</a></li>  -->
+				<li><a href="https://github.com/keshavnagpal" class="white-text" target="_blank">Go to my Github</a></li>
+				<li><a href="docs/KeshavNagpalResume.pdf" class="white-text" target="_blank">Download my Resume</a></li>
+				<li><a href="https://in.linkedin.com/in/keshavnagpal" class="white-text" target="_blank">Connect with LinkedIn</a></li>
+			</ul>
 
-      <ul id="nav-mobile" class="side-nav grey darken-3">
-        <!-- <li><a href="index.html" class="white-text">Home</a></li> -->
-        <li><a href="https://github.com/keshavnagpal" class="white-text" target="_blank">Go to my Github</a></li>
-        <li><a href="docs/KeshavNagpalResume.pdf" class="white-text" target="_blank">Download my Resume</a></li>
-        <li><a href="https://in.linkedin.com/in/keshavnagpal" class="white-text" target="_blank">Connect with LinkedIn</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+			<ul id="nav-mobile" class="side-nav grey darken-3">
+				<!-- <li><a href="index.html" class="white-text">Home</a></li> -->
+				<li><a href="https://github.com/keshavnagpal" class="white-text" target="_blank">Go to my Github</a></li>
+				<li><a href="docs/KeshavNagpalResume.pdf" class="white-text" target="_blank">Download my Resume</a></li>
+				<li><a href="https://in.linkedin.com/in/keshavnagpal" class="white-text" target="_blank">Connect with LinkedIn</a></li>
+			</ul>
+			<a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="material-icons">menu</i></a>
+		</div>
+	</nav>
 
-  <main>
+	<main>
 
-    <div class="container section">
-      <div class="row">
-        <div class="col s3 m3">
-          <form action="#">
-            <p>
-              <input type="checkbox" checked="true" id="showAll" disabled="disabled" onchange="init()" />
-              <label for="showAll">Show all</label>
-            </p>
-          </form>
-        </div>
+		<div class="container section">
+			<div class="row">
+				<div class="col s3 m3">
+					<form action="#">
+						<p>
+							<input type="checkbox" checked="true" id="showAll" disabled="disabled" onchange="init()" />
+							<label for="showAll">Show all</label>
+						</p>
+					</form>
+				</div>
 
-        <div class="col s9 m9">
-          <div class="input-field">  
-           <input type="search" required id="search" onsearch="filter()">   
-           <label for="search"><i>search</i></label>
-           <i class="material-icons" onclick="filter()">search</i> 
-         </div>
-       </div>
-     </div>
-   </div>
-   <div class="container">
-     <div class="row flow-text">
-       <p id="result" class="centereds"></p>
-     </div>
-   </div>
+				<div class="col s9 m9">
+					<div class="input-field">  
+						<input type="search" required id="search" onsearch="filter()">   
+						<label for="search"><i>search</i></label>
+						<i class="material-icons" onclick="filter()">search</i> 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row flow-text">
+				<p id="result" class="centereds"></p>
+			</div>
+		</div>
 
-   <div class="section container">
-    <div class="row" id="projects">
+		<div class="section container">
+			<div class="row" id="projects">
 
-      <div class="col s12 m4" id="Balanced ScoreCard using D3js">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Balanced ScoreCard using D3js<i class="material-icons right">more_vert</i></span>
-            <p>August 2016</p>
+				<div class="col s12 m4" id="Balanced ScoreCard using D3js">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Balanced ScoreCard using D3js<i class="material-icons right">more_vert</i></span>
+							<p>August 2016</p>
 
-          </div>
-          <div class="card-action">
-            <a href="docs/Balanced Score Card using D3js.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/D3BalanceScoreCard" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Balanced ScoreCard using D3js<i class="material-icons right">close</i></span>
-            <p>This was a learning exercise on Data Driven Documents, the demo is a data visualisation. Link to the json data used can be found in the Documentation </p>
-          </div>
+						</div>
+						<div class="card-action">
+							<a href="docs/Balanced Score Card using D3js.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/D3BalanceScoreCard" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Balanced ScoreCard using D3js<i class="material-icons right">close</i></span>
+							<p>This was a learning exercise on Data Driven Documents, the demo is a data visualisation. Link to the json data used can be found in the Documentation </p>
+						</div>
 
-        </div>
-      </div>
+					</div>
+				</div>
 
-      <div class="col s12 m4" id="Voice enabled UI">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Voice enabled UI<i class="material-icons right">more_vert</i></span>
-            <p>July 2016</p>
+				<div class="col s12 m4" id="Voice enabled UI">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro2.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Voice enabled UI<i class="material-icons right">more_vert</i></span>
+							<p>July 2016</p>
 
-          </div>
-          <div class="card-action">
-            <a href="docs/Voice enabled UI.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/nlp" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Voice enabled UI<i class="material-icons right">close</i></span>
-            <p>This was a demo to show how voice enabled user interface can be used in interactive dashboards and filters , further details can be found in the documentations</p>
-          </div>
+						</div>
+						<div class="card-action">
+							<a href="docs/Voice enabled UI.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/nlp" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Voice enabled UI<i class="material-icons right">close</i></span>
+							<p>This was a demo to show how voice enabled user interface can be used in interactive dashboards and filters , further details can be found in the documentations</p>
+						</div>
 
-        </div>
-      </div>
+					</div>
+				</div>
 
-      <div class="col s12 m4" id="Pong">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Pong<i class="material-icons right">more_vert</i></span>
-            <p>July 2016</p>
+				<div class="col s12 m4" id="Pong">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Pong<i class="material-icons right">more_vert</i></span>
+							<p>July 2016</p>
 
-          </div>
-          <div class="card-action">
-            <a href="https://keshavnagpal.github.io/moveJS" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Pong<i class="material-icons right">close</i></span>
-            <p>This is an attempt to replicate the first commercially succesfull video game and a learning exercise for Processing enviroment</p>
-          </div>
+						</div>
+						<div class="card-action">
+							<a href="https://keshavnagpal.github.io/moveJS" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Pong<i class="material-icons right">close</i></span>
+							<p>This is an attempt to replicate the first commercially succesfull video game and a learning exercise for Processing enviroment</p>
+						</div>
 
-        </div>
-      </div>
+					</div>
+				</div>
 
-      <div class="col s12 m4" id="Voice enabled UI in D3js ">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Voice enabled UI in D3js <i class="material-icons right">more_vert</i></span>
-            <p>August 2016</p>
+				<div class="col s12 m4" id="Voice enabled UI in D3js ">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro2.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Voice enabled UI in D3js <i class="material-icons right">more_vert</i></span>
+							<p>August 2016</p>
 
-          </div>
-          <div class="card-action">
-            <a href="docs/Balanced Score Card using D3js.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/Voice" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Voice enabled UI in D3js <i class="material-icons right">close</i></span>
-            <p>This was an attempt to integrate voice enabled user interface to the data driven document made using D3js</p>
-          </div>
+						</div>
+						<div class="card-action">
+							<a href="docs/Balanced Score Card using D3js.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/Voice" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Voice enabled UI in D3js <i class="material-icons right">close</i></span>
+							<p>This was an attempt to integrate voice enabled user interface to the data driven document made using D3js</p>
+						</div>
 
-        </div>
-      </div>
+					</div>
+				</div>
 
-      <div class="col s12 m4" id="User Configurable Dashboard">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">User Configurable Dashboard<i class="material-icons right">more_vert</i></span>
-            <p>June 2016</p>
+				<div class="col s12 m4" id="User Configurable Dashboard">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">User Configurable Dashboard<i class="material-icons right">more_vert</i></span>
+							<p>June 2016</p>
 
-          </div>
-          <div class="card-action">
-            <a href="docs/Configurable DashBoard.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/dashboard" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">User Configurable Dashboard<i class="material-icons right">close</i></span>
-            <p>This was one of my first project made in JavaScript, using this user can make a customized dashboard and save/print it. Still images are used as placeholder for the widgets</p>
-          </div>
+						</div>
+						<div class="card-action">
+							<a href="docs/Configurable DashBoard.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/dashboard" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">User Configurable Dashboard<i class="material-icons right">close</i></span>
+							<p>This was one of my first project made in JavaScript, using this user can make a customized dashboard and save/print it. Still images are used as placeholder for the widgets</p>
+						</div>
 
-        </div>
-      </div>
+					</div>
+				</div>
 
-      <div class="col s12 m4" id="Parallax Demo using Processing">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Parallax Demo using Processing<i class="material-icons right">more_vert</i></span>
-            <p>July 2016</p>
-          </div>
-          <div class="card-action">
-            <a href="docs/Parallax demo.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/para" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Parallax Demo using Processing<i class="material-icons right">close</i></span>
-            <p>This was one of my learning exercise of using processing enviroment , a demo of parallax effect having four layers.</p>
-          </div>
+				<div class="col s12 m4" id="Csi Gtbit">		
+					<div class="card  hoverable hoverable">		
+						<div class="card-image waves-effect waves-block waves-light">		
+							<img class="activator" src="assets/pro1.jpg">		
+						</div>		
+						<div class="card-content">		
+							<span class="card-title activator grey-text text-darken-4">Csi Gtbit<i class="material-icons right">more_vert</i></span>		
+							<p>March 2016</p>		
+							
+						</div>		
+						<div class="card-action">		
+							<a href="https://keshavnagpal.github.io/csigtbit" target="_blank">Demo</a>		
+						</div>		
+						<div class="card-reveal">		
+							<span class="card-title grey-text text-darken-4">Csi Gtbit<i class="material-icons right">close</i></span>		
+							<p>This was an attempt to make a website for our college's branch of computer society of india</p>
+						</div>
+					</div>
+				</div>
 
-        </div>
-      </div>
+				<div class="col s12 m4" id="Parallax Demo using Processing">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro2.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">Parallax Demo using Processing<i class="material-icons right">more_vert</i></span>
+							<p>July 2016</p>
+						</div>
+						<div class="card-action">
+							<a href="docs/Parallax demo.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/para" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">Parallax Demo using Processing<i class="material-icons right">close</i></span>
+							<p>This was one of my learning exercise of using processing enviroment , a demo of parallax effect having four layers.</p>
+						</div>
 
-      <div class="col s12 m4" id="PoC of using Motion Sensor">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">PoC of using Motion Sensor<i class="material-icons right">more_vert</i></span>
-            <p>June 2016</p>
-          </div>
-          <div class="card-action">
-            <a href="docs/Tech Demo of Motion sensor.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/gyro" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">PoC of using Motion Sensor<i class="material-icons right">close</i></span>
-            <p>This was a tech. demo of using device's motion sensor to take input in a web application/interface.</p>
-          </div>
+					</div>
+				</div>
 
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+				<div class="col s12 m4" id="PoC of using Motion Sensor">
+					<div class="card hoverable">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="assets/pro1.jpg">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">PoC of using Motion Sensor<i class="material-icons right">more_vert</i></span>
+							<p>June 2016</p>
+						</div>
+						<div class="card-action">
+							<a href="docs/Tech Demo of Motion sensor.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/gyro" target="_blank">Demo</a>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4">PoC of using Motion Sensor<i class="material-icons right">close</i></span>
+							<p>This was a tech. demo of using device's motion sensor to take input in a web application/interface.</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </main>
 
 <footer class="page-footer grey darken-3">
-  <div class="container">
+	<div class="container">
 
-  </div>
+	</div>
 </footer>
 
 

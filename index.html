@@ -1,320 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Project Showcase</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+	<title>Project Showcase</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <script type="text/javascript">
+	<!-- CSS  -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<style type="text/css">
+		/* Header */
+		.large-header {
+			position: relative;
+			width: 100%;
+			background: #333;
+			overflow: hidden;
+			background-size: cover;
+			background-position: center center;
+			z-index: 1;
+		}
 
-    function init(){
-      //debugger
-      var inner=document.getElementById("result");
-      inner.innerText='';
-      var project=document.getElementById("projects");
-      var pchild;
-      for(var i=0;i<projects.childNodes.length;i++){
-        pchild = project.childNodes[i];
-        if(pchild.id!=undefined){
-          document.getElementById(pchild.id).style.display='inline';
+		#large-header {
+			background-image: url('assets/background.jpg');
+		}
+
+		.main-title {
+			position: absolute;
+			margin: 0;
+			padding: 0;
+			color: #f9f1e9;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translate3d(-50%,-50%,0);
+			transform: translate3d(-50%,-50%,0);
+		}
+
+		.demo-1 .main-title {
+			text-transform: uppercase;
+			font-size: 4.2em;
+			letter-spacing: 0.1em;
+		}
+
+		/*.main-title .thin {
+			font-weight: 200;
+		}*/
+
+		@media only screen and (max-width : 768px) {
+			.demo-1 .main-title {
+				font-size: 3em;
+			}
+		}
+		.blackbutton {
+
+			text-align: center;
+			text-decoration: none;
+			-webkit-transition-duration: 0.4s; /* Safari */
+			transition-duration: 0.4s;
+			border:1px solid white;
+			background-color: transparent;
+			cursor: pointer;	
+		}
+		.blackbutton:hover{
+			background-color: #42a5f5;
+			color: black;
+			border: 1px solid #000;
+		}
+        .bluebutton{
+            text-align: center;
+            text-decoration: none;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            border:1px solid white;
+            background-color: #2196f3;
+            cursor: pointer;
+
         }
-      }
-      document.getElementById("showAll").disabled ='disabled';
-    }
-
-    function filter(){
-      //debugger
-      var j=0;
-      var inner=document.getElementById("result");
-      var inp = document.getElementById("search").value;
-      // var res=inp;
-      var res = new RegExp(''+inp+'+');
-      //alert(res);
-      var project=document.getElementById("projects");
-      var pchild;
-      if(inp.trim()!=''){
-        
-        document.getElementById("showAll").disabled ='';
-        document.getElementById("showAll").checked = false;
-
-        for(var i=0;i<projects.childNodes.length;i++){
-          pchild = project.childNodes[i];
-        //debugger
-        
-        if(pchild.id!=undefined){
-          var pid='';
-          pid=pchild.id.toLowerCase();
-          var flag=pid.search(res);
-          if (flag>=0) {
-          //alert(pchild.id);
-          document.getElementById(pchild.id).style.display='inline';
-          j+=1;
+        .bluebutton:hover{
+            background-color: #53b6f6;
+            color: black;
+            border: 1px solid #000;
         }
-        else{
-          document.getElementById(pchild.id).style.display='none';
-        }
-      }
-    }
-    if(j<=0){
-      // init();
-      inner.innerText='Showing '+j+' results for \"'+inp+'\"';
-      // alert('No project with name \"'+inp+'\" found');
-    }
-    else{
-      if(j>1)
-        inner.innerText='Showing '+j+' results for \"'+inp+'\"';
-      else
-        inner.innerText='Showing '+j+' result for \"'+inp+'\"';
-    }
-  }
-  return false;
-}
-
-</script>
+		
+	</style>
 </head>
-<body class="">
-	<nav class="grey darken-3" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="index.html" class="brand-logo white-text">Project Showcase</a>
-      <ul class="right hide-on-med-and-down">
-        <!-- <li><a href="index.html" class="white-text">Home</a></li>  -->
-        <li><a href="https://github.com/keshavnagpal" class="white-text" target="_blank">Go to my Github</a></li>
-        <li><a href="docs/KeshavNagpalResume.pdf" class="white-text" target="_blank">Download my Resume</a></li>
-        <li><a href="https://in.linkedin.com/in/keshavnagpal" class="white-text" target="_blank">Connect with LinkedIn</a></li>
-      </ul>
+<body class="grey lighten-3">
 
-      <ul id="nav-mobile" class="side-nav teal lighten-2">
-        <!-- <li><a href="index.html" class="white-text">Home</a></li> -->
-        <li><a href="https://github.com/keshavnagpal" class="white-text" target="_blank">Go to my Github</a></li>
-        <li><a href="docs/KeshavNagpalResume.pdf" class="white-text" target="_blank">Download my Resume</a></li>
-        <li><a href="https://in.linkedin.com/in/keshavnagpal" class="white-text" target="_blank">Connect with LinkedIn</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse white-text"><i class="material-icons">menu</i></a>
+</nav>
+
+<main>
+
+	<div id="large-header" class="large-header">
+		<canvas id="demo-canvas"></canvas>
+
+		<div class="row main-title container">
+            <div class="row center">
+                <h1>Project Showcase</h1>
+                <div>
+                <a class="blackbutton white-text btn" href="https://github.com/keshavnagpal" target="_blank">Go to Github</a>
+                <a class="bluebutton white-text btn" href="tiles.html">Enter</a>
+                </div>
+                
+            </div>
+        </div>
     </div>
-  </nav>
 
-  <main>
-
-    <div class="container section">
-      <div class="row">
-        <div class="col s3 m3">
-          <form action="#">
-            <p>
-              <input type="checkbox" checked="true" id="showAll" disabled="disabled" onchange="init()" />
-              <label for="showAll">Show all</label>
-            </p>
-          </form>
-        </div>
-
-        <div class="col s9 m9">
-          <div class="input-field">  
-           <input type="search" required id="search" onsearch="filter()">   
-           <label for="search"><i>search</i></label>
-           <i class="material-icons">search</i> 
-         </div>
-       </div>
-     </div>
-   </div>
-   <div class="container">
-     <div class="row flow-text">
-       <p id="result" class="centereds"></p>
-     </div>
-   </div>
-
-   <div class="section container">
-    <div class="row" id="projects">
-
-      <div class="col s12 m4" id="Balanced ScoreCard using D3js">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Balanced ScoreCard using D3js<i class="material-icons right">more_vert</i></span>
-            <p>August 2016</p>
-
-          </div>
-          <div class="card-action">
-            <a href="docs/Balanced Score Card using D3js.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/D3BalanceScoreCard" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Balanced ScoreCard using D3js<i class="material-icons right">close</i></span>
-            <p>This was a learning exercise on Data Driven Documents, the demo is a data visualisation. Link to the json data used can be found in the Documentation </p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="Csi Gtbit">
-        <div class="card  hoverable hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Csi Gtbit<i class="material-icons right">more_vert</i></span>
-            <p>March 2016</p>
-
-          </div>
-          <div class="card-action">
-            <a href="https://keshavnagpal.github.io/csigtbit" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Csi Gtbit<i class="material-icons right">close</i></span>
-            <p>This was an attempt to make a website for our college's branch of computer society of india</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="Voice enabled UI">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Voice enabled UI<i class="material-icons right">more_vert</i></span>
-            <p>July 2016</p>
-
-          </div>
-          <div class="card-action">
-            <a href="docs/Voice enabled UI.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/nlp" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Voice enabled UI<i class="material-icons right">close</i></span>
-            <p>This was a demo to show how voice enabled user interface can be used in interactive dashboards and filters , further details can be found in the documentations</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="Pong">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Pong<i class="material-icons right">more_vert</i></span>
-            <p>July 2016</p>
-
-          </div>
-          <div class="card-action">
-            <a href="https://keshavnagpal.github.io/moveJS" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Pong<i class="material-icons right">close</i></span>
-            <p>This is an attempt to replicate the first commercially succesfull video game and a learning exercise for Processing enviroment</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="Voice enabled UI in D3js ">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Voice enabled UI in D3js <i class="material-icons right">more_vert</i></span>
-            <p>August 2016</p>
-
-          </div>
-          <div class="card-action">
-            <a href="docs/Balanced Score Card using D3js.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/Voice" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Voice enabled UI in D3js <i class="material-icons right">close</i></span>
-            <p>This was an attempt to integrate voice enabled user interface to the data driven document made using D3js</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="User Configurable Dashboard">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">User Configurable Dashboard<i class="material-icons right">more_vert</i></span>
-            <p>June 2016</p>
-
-          </div>
-          <div class="card-action">
-            <a href="docs/Configurable DashBoard.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/dashboard" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">User Configurable Dashboard<i class="material-icons right">close</i></span>
-            <p>This was one of my first project made in JavaScript, using this user can make a customized dashboard and save/print it. Still images are used as placeholder for the widgets</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="Parallax Demo using Processing">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro2.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">Parallax Demo using Processing<i class="material-icons right">more_vert</i></span>
-            <p>July 2016</p>
-          </div>
-          <div class="card-action">
-            <a href="docs/Parallax demo.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/para" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Parallax Demo using Processing<i class="material-icons right">close</i></span>
-            <p>This was one of my learning exercise of using processing enviroment , a demo of parallax effect having four layers.</p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="col s12 m4" id="PoC of using Motion Sensor">
-        <div class="card hoverable">
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="assets/pro1.jpg">
-          </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">PoC of using Motion Sensor<i class="material-icons right">more_vert</i></span>
-            <p>June 2016</p>
-          </div>
-          <div class="card-action">
-            <a href="docs/Tech Demo of Motion sensor.pdf" target="_blank">Documentation</a><a href="https://keshavnagpal.github.io/gyro" target="_blank">Demo</a>
-          </div>
-          <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">PoC of using Motion Sensor<i class="material-icons right">close</i></span>
-            <p>This was a tech. demo of using device's motion sensor to take input in a web application/interface.</p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 </main>
 
-<footer class="page-footer teal lighten-2">
-  <div class="container">
-    <div class="row"> 
-    </div>
-  </div>
-  <div class="footer-copyright">
-    <div class="container">
-
-    </div>
-  </div>
-</footer>
-
-
 <!--  Scripts-->
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="js/easepack.js"></script>
+<script src="js/raf.js"></script>
+<script src="js/tweetlite.js"></script>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/materialize.min.js"></script>
 <script src="js/init.js"></script>
+<script type="text/javascript">
+	(function() {
+
+		var width, height, largeHeader, canvas, ctx, points, target, animateHeader = true;
+
+    // Main
+    initHeader();
+    initAnimation();
+    addListeners();
+
+    function initHeader() {
+    	width = window.innerWidth;
+    	height = window.innerHeight;
+    	target = {x: width/2, y: height/2};
+
+    	largeHeader = document.getElementById('large-header');
+    	largeHeader.style.height = height+'px';
+
+    	canvas = document.getElementById('demo-canvas');
+    	canvas.width = width;
+    	canvas.height = height;
+    	ctx = canvas.getContext('2d');
+
+        // create points
+        points = [];
+        for(var x = 0; x < width; x = x + width/20) {
+        	for(var y = 0; y < height; y = y + height/20) {
+        		var px = x + Math.random()*width/20;
+        		var py = y + Math.random()*height/20;
+        		var p = {x: px, originX: px, y: py, originY: py };
+        		points.push(p);
+        	}
+        }
+
+        // for each point find the 5 closest points
+        for(var i = 0; i < points.length; i++) {
+        	var closest = [];
+        	var p1 = points[i];
+        	for(var j = 0; j < points.length; j++) {
+        		var p2 = points[j]
+        		if(!(p1 == p2)) {
+        			var placed = false;
+        			for(var k = 0; k < 5; k++) {
+        				if(!placed) {
+        					if(closest[k] == undefined) {
+        						closest[k] = p2;
+        						placed = true;
+        					}
+        				}
+        			}
+
+        			for(var k = 0; k < 5; k++) {
+        				if(!placed) {
+        					if(getDistance(p1, p2) < getDistance(p1, closest[k])) {
+        						closest[k] = p2;
+        						placed = true;
+        					}
+        				}
+        			}
+        		}
+        	}
+        	p1.closest = closest;
+        }
+
+        // assign a circle to each point
+        for(var i in points) {
+        	var c = new Circle(points[i], 2+Math.random()*2, 'rgba(255,255,255,0.3)');
+        	points[i].circle = c;
+        }
+    }
+
+    // Event handling
+    function addListeners() {
+    	if(!('ontouchstart' in window)) {
+    		window.addEventListener('mousemove', mouseMove);
+    	}
+    	window.addEventListener('scroll', scrollCheck);
+    	window.addEventListener('resize', resize);
+    }
+
+    function mouseMove(e) {
+    	var posx = posy = 0;
+    	if (e.pageX || e.pageY) {
+    		posx = e.pageX;
+    		posy = e.pageY;
+    	}
+    	else if (e.clientX || e.clientY)    {
+    		posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+    		posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    	}
+    	target.x = posx;
+    	target.y = posy;
+    }
+
+    function scrollCheck() {
+    	if(document.body.scrollTop > height) animateHeader = false;
+    	else animateHeader = true;
+    }
+
+    function resize() {
+    	width = window.innerWidth;
+    	height = window.innerHeight;
+    	largeHeader.style.height = height+'px';
+    	canvas.width = width;
+    	canvas.height = height;
+    }
+
+    // animation
+    function initAnimation() {
+    	animate();
+    	for(var i in points) {
+    		shiftPoint(points[i]);
+    	}
+    }
+
+    function animate() {
+    	if(animateHeader) {
+    		ctx.clearRect(0,0,width,height);
+    		for(var i in points) {
+                // detect points in range
+                if(Math.abs(getDistance(target, points[i])) < 4000) {
+                	points[i].active = 0.3;
+                	points[i].circle.active = 0.6;
+                } else if(Math.abs(getDistance(target, points[i])) < 20000) {
+                	points[i].active = 0.1;
+                	points[i].circle.active = 0.3;
+                } else if(Math.abs(getDistance(target, points[i])) < 40000) {
+                	points[i].active = 0.02;
+                	points[i].circle.active = 0.1;
+                } else {
+                	points[i].active = 0;
+                	points[i].circle.active = 0;
+                }
+
+                drawLines(points[i]);
+                points[i].circle.draw();
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    function shiftPoint(p) {
+    	TweenLite.to(p, 1+1*Math.random(), {x:p.originX-50+Math.random()*100,
+    		y: p.originY-50+Math.random()*100, ease:Circ.easeInOut,
+    		onComplete: function() {
+    			shiftPoint(p);
+    		}});
+    }
+
+    // Canvas manipulation
+    function drawLines(p) {
+    	if(!p.active) return;
+    	for(var i in p.closest) {
+    		ctx.beginPath();
+    		ctx.moveTo(p.x, p.y);
+    		ctx.lineTo(p.closest[i].x, p.closest[i].y);
+    		ctx.strokeStyle = 'rgba(156,217,249,'+ p.active+')';
+    		ctx.stroke();
+    	}
+    }
+
+    function Circle(pos,rad,color) {
+    	var _this = this;
+
+        // constructor
+        (function() {
+        	_this.pos = pos || null;
+        	_this.radius = rad || null;
+        	_this.color = color || null;
+        })();
+
+        this.draw = function() {
+        	if(!_this.active) return;
+        	ctx.beginPath();
+        	ctx.arc(_this.pos.x, _this.pos.y, _this.radius, 0, 2 * Math.PI, false);
+        	ctx.fillStyle = 'rgba(156,217,249,'+ _this.active+')';
+        	ctx.fill();
+        };
+    }
+
+    // Util
+    function getDistance(p1, p2) {
+    	return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+    }
+    
+})();
+</script>
+
 
 </body>
 </html>

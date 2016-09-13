@@ -4199,7 +4199,7 @@ nav ul a.btn, nav ul a.btn-large, nav ul a.btn-large, nav ul a.btn-flat, nav ul 
 }
 
 nav ul a:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 nav ul.left {
@@ -6715,7 +6715,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .side-nav a:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .side-nav a.btn, .side-nav a.btn-large, .side-nav a.btn-large, .side-nav a.btn-flat, .side-nav a.btn-floating {

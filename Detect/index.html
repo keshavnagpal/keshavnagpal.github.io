@@ -29,16 +29,16 @@
     var r = getMobileOperatingSystem();
     alert(r);
     if(r=="Android"){
-      window.location.replace("https://en.wikipedia.org/wiki/Android_(operating_system)","self");
+      window.location.replace("android.jpg","self");
     }
     if(r=="iOS"){
-      window.location.replace("https://en.wikipedia.org/wiki/IOS","self");
+      window.location.replace("ios.jpg","self");
     }
     if(r=="Windows Phone"){
       window.location.replace("https://en.wikipedia.org/wiki/Microsoft_Windows","self");
     }
     if(r=="Computer OS"){
-      window.location.replace("https://en.wikipedia.org/wiki/Operating_system","self");
+      document.getElementById("heading").innerHTML = "sample text";
     }
 
   </script>
@@ -46,6 +46,7 @@
 </head>
 
 <body>
+<h3 id="heading"></h3>
 </body>
 
 

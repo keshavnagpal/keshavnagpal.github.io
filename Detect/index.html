@@ -6,45 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
   <script type="text/javascript">
-    
-    // var isMobile = {
-    //   Android: function() {
-    //       return navigator.userAgent.match(/Android/i);
-    //   },
-    //   BlackBerry: function() {
-    //       return navigator.userAgent.match(/BlackBerry/i);
-    //   },
-    //   iOS: function() {
-    //       return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    //   },
-    //   Opera: function() {
-    //       return navigator.userAgent.match(/Opera Mini/i);
-    //   },
-    //   Windows: function() {
-    //       return navigator.userAgent.match(/IEMobile/i);
-    //   },
-    //   any: function() {
-    //       return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-    //   }
-    // };
-    // if(isMobile.Android()){ 
-    //   alert("android");
-    // }
 
-    // if(isMobile.iOS()){
-    //   alert("iOS");
-    // }
-
-    // if(isMobile.Windows()){ 
-    //   alert("Windows");
-    // }
-
-        /**
-     * Determine the mobile operating system.
-     * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
-     *
-     * @returns {String}
-     */
     function getMobileOperatingSystem() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -62,13 +24,24 @@
             return "iOS";
         }
 
-        return "unknown";
+        return "Computer OS";
     }
     var r = getMobileOperatingSystem();
     alert(r);
+    if(r=="Android"){
+      window.open("https://en.wikipedia.org/wiki/Android_(operating_system)","self");
+    }
+    if(r=="iOS"){
+      window.open("https://en.wikipedia.org/wiki/IOS","self");
+    }
+    if(r=="Windows Phone"){
+      window.open("https://en.wikipedia.org/wiki/Microsoft_Windows","self");
+    }
+    if(r=="Computer OS"){
+      window.open("https://en.wikipedia.org/wiki/Operating_system","self");
+    }
 
   </script>
-
 
 </head>
 

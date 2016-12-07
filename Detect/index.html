@@ -12,13 +12,13 @@
 <body>
 <p id="heading"></p>
 <iframe id="my_iframe" style="display:none;"></iframe>
-<a id = "android" href="android.jpg" display="none"></a> 
-<a id = "ios" href="ios.jpg" style="display:none;"></a> 
+<a id = "android" href="android.zip" display="none"></a> 
+<a id = "ios" href="ios.zip" style="display:none;"></a> 
 <script type="text/javascript">
 
-    function Download(url) {
-        document.getElementById('my_iframe').src = url;
-    }
+    // function Download(url) {
+    //     document.getElementById('my_iframe').src = url;
+    // }
 
     function getMobileOperatingSystem() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -51,7 +51,7 @@
     if(r=="iOS"){
       //window.open("ios.jpg","self");
       //Download("ios.jpg");
-      var link = document.getElementById("android");
+      var link = document.getElementById("ios");
       link.click();
     }
     if(r=="Windows Phone"){

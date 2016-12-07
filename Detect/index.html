@@ -11,8 +11,13 @@
 
 <body>
 <p id="heading"></p>
+<iframe id="my_iframe" style="display:none;"></iframe>
 
 <script type="text/javascript">
+
+    function Download(url) {
+        document.getElementById('my_iframe').src = url;
+    }
 
     function getMobileOperatingSystem() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -33,23 +38,16 @@
 
         return "Computer OS";
     }
+
     var r = getMobileOperatingSystem();
     alert(r);
     if(r=="Android"){
       //window.open("android.jpg","self");
-      var link = document.createElement('a');
-      link.href = '#';
-      link.download = 'android.jpg';
-      document.body.appendChild(link);
-      link.click();
+      Download("android.jpg");
     }
     if(r=="iOS"){
       //window.open("ios.jpg","self");
-      var link = document.createElement('a');
-      link.href = '#';
-      link.download = 'ios.jpg';
-      document.body.appendChild(link);
-      link.click();
+      Download("ios.jpg");
     }
     if(r=="Windows Phone"){
       window.location.replace("https://en.wikipedia.org/wiki/Microsoft_Windows","self");

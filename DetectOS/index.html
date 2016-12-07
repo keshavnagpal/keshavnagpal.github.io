@@ -11,15 +11,8 @@
 
 <body>
 <p id="heading"></p>
-<!-- <iframe id="my_iframe" style="display:none;"></iframe> -->
-<a id = "android" href="android.zip" style="display:none;"></a> 
-<a id = "ios" href="ios.zip" style="display:none;"></a> 
 
 <script type="text/javascript">
-
-    // function Download(url) {
-    //     document.getElementById('my_iframe').src = url;
-    // }
 
     function getMobileOperatingSystem() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -44,25 +37,17 @@
     var r = getMobileOperatingSystem();
     alert(r);
     if(r=="Android"){
-      window.open("android.zip","self");
-      //Download("android.zip");
-      // var link = document.getElementById("android");
-      // link.click();
+      window.open("android.zip","self");      
     }
     if(r=="iOS"){
       window.open("ios.zip","self");
-      //Download("ios.zip");
-      // var link = document.getElementById("ios");
-      // link.click();
     }
     if(r=="Windows Phone"){
       window.location.replace("https://en.wikipedia.org/wiki/Microsoft_Windows","self");
     }
     if(r=="Computer OS"){
       document.getElementById("heading").innerHTML = "sample text";
-      //Download("android.zip");
-      // var link = document.getElementById("android");
-      // link.click();
+      
     }
 
   </script>

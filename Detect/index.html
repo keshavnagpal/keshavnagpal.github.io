@@ -11,9 +11,10 @@
 
 <body>
 <p id="heading"></p>
-<iframe id="my_iframe" style="display:none;"></iframe>
-<a id = "android" href="android.zip" display="none"></a> 
+<!-- <iframe id="my_iframe" style="display:none;"></iframe> -->
+<a id = "android" href="android.zip" style="display:none;"></a> 
 <a id = "ios" href="ios.zip" style="display:none;"></a> 
+
 <script type="text/javascript">
 
     // function Download(url) {
@@ -43,14 +44,14 @@
     var r = getMobileOperatingSystem();
     alert(r);
     if(r=="Android"){
-      //window.open("android.jpg","self");
-      //Download("android.jpg");
+      //window.open("android.zip","self");
+      //Download("android.zip");
       var link = document.getElementById("android");
       link.click();
     }
     if(r=="iOS"){
-      //window.open("ios.jpg","self");
-      //Download("ios.jpg");
+      //window.open("ios.zip","self");
+      //Download("ios.zip");
       var link = document.getElementById("ios");
       link.click();
     }
@@ -59,7 +60,7 @@
     }
     if(r=="Computer OS"){
       document.getElementById("heading").innerHTML = "sample text";
-      //Download("android.jpg");
+      //Download("android.zip");
       var link = document.getElementById("android");
       link.click();
     }

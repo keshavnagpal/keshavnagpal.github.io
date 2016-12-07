@@ -12,7 +12,8 @@
 <body>
 <p id="heading"></p>
 <iframe id="my_iframe" style="display:none;"></iframe>
-
+<a id = "android" href="android.jpg" display="none"></a> 
+<a id = "ios" href="ios.jpg" style="display:none;"></a> 
 <script type="text/javascript">
 
     function Download(url) {
@@ -43,18 +44,24 @@
     alert(r);
     if(r=="Android"){
       //window.open("android.jpg","self");
-      Download("android.jpg");
+      //Download("android.jpg");
+      var link = document.getElementById("android");
+      link.click();
     }
     if(r=="iOS"){
       //window.open("ios.jpg","self");
-      Download("ios.jpg");
+      //Download("ios.jpg");
+      var link = document.getElementById("android");
+      link.click();
     }
     if(r=="Windows Phone"){
       window.location.replace("https://en.wikipedia.org/wiki/Microsoft_Windows","self");
     }
     if(r=="Computer OS"){
       document.getElementById("heading").innerHTML = "sample text";
-      Download("android.jpg");
+      //Download("android.jpg");
+      var link = document.getElementById("android");
+      link.click();
     }
 
   </script>

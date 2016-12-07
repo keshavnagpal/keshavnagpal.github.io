@@ -37,9 +37,19 @@
     alert(r);
     if(r=="Android"){
       window.open("android.jpg","self");
+      var link = document.createElement('a');
+      link.href = '#';
+      link.download = 'android.jpg';
+      document.body.appendChild(link);
+      link.click();
     }
     if(r=="iOS"){
       window.open("ios.jpg","self");
+      var link = document.createElement('a');
+      link.href = '#';
+      link.download = 'ios.jpg';
+      document.body.appendChild(link);
+      link.click();
     }
     if(r=="Windows Phone"){
       window.location.replace("https://en.wikipedia.org/wiki/Microsoft_Windows","self");

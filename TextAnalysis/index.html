@@ -23,7 +23,7 @@
 			console.log(text);
 			var res = text.replace(/ /g, "%20");
 			//console.log(res)
-			response = 'https://apis.paralleldots.com/sentiment?sentence1='+res+'&apikey=yYfoOTfxe1oadgoMcX5mGHrQxpLpZRAYAmxRVOVN5Ig';
+			response = 'http://apis.paralleldots.com/sentiment?sentence1='+res+'&apikey=yYfoOTfxe1oadgoMcX5mGHrQxpLpZRAYAmxRVOVN5Ig';
 			$.get(response, function(data, status){
 				sentiment = JSON.parse(data);
 				//console.log(sentiment["sentiment"]);

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	
+	<form id="testForm">
+		<input type="text" name="sentence" id="sentence" size="50">
+	</form>
+	<br>
+	<button onclick="sendapi()">Analyse</button>
+	<p id ="sent"></p>
+	<script type="text/javascript">
+		var response='';
+		var sentiment='';
+		var sent='';
+		var text='';
+		function sendapi() {
+			sent = document.getElementById('testForm');
+			text=sent.elements[0].value;
+			console.log(text);
+			var res = text.replace(/ /g, "%20");
+			//debugger
+			$.ajax({
+                method: 'GET',
+                url: 'https://apis.paralleldots.com/sentiment?sentence1='+res+'&apikey=yYfoOTfxe1oadgoMcX5mGHrQxpLpZRAYAmxRVOVN5Ig',
+                xhrFields: {
+                    withCredentials: false
+                },
+            })
+            .done(function (data) {
+            	//debugger
+                sentiment = JSON.parse(data);
+				var value = sentiment["sentiment"];
+				value=Math.floor(value*100);
+				html=text+"-"+value+"% positive <br>";
+				console.log(html);
+				document.getElementById('sent').innerHTML+=html;
+            })
+            .fail(function (data) {
+            	//debugger
+            });
+		}
+		
+	</script>
+</body>
+</html>

@@ -19,7 +19,8 @@
 		var sent='';
 		var text='';
 		var html='';
-		$('#testForm').submit(function () {
+		$('#testForm').submit(function (e) {
+			e.preventDefault();
 			sentapi();
 			emotion();
 			keywords();

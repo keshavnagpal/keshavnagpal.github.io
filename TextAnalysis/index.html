@@ -8,7 +8,7 @@
 <body>
 	
 	<form id="testForm">
-		<input type="text" name="sentence" id="sentence" size="50">
+		<input type="text" action="alert('success')" name="sentence" method = 'POST' id="sentence" size="50">
 		<button id="analyseButton" type="submit">Analyse</button>
 	</form>	
 	
@@ -21,9 +21,8 @@
 		var html='';
 		$('#testForm').submit(function (e) {
 			e.preventDefault();
-			sentapi();
-			emotion();
-			keywords();
+			document.getElementById('sent').innerHTML='';
+			sentapi();			
 			return false;
 		});
 		function sentapi() {
@@ -39,55 +38,19 @@
 					'data': text,
 				})
 				).then(function(res) { 
-					//html="";
+					html="";
 					//console.log(res);
 					sentiment=JSON.parse(res);
 					//console.log(sentiment);
 					value = sentiment["results"]*100;
 					//console.log(value);
 					value=Math.floor(value);
-					html=text+"<br>"+value+"% positive | ";
+					html="| "+value+"% positive |";
 					//console.log(html);
 					document.getElementById('sent').innerHTML+=html;
 
 				});
 
-			}
-
-		function emotion() {
-			sent = document.getElementById('testForm');
-			text=sent.elements[0].value;
-			document.getElementById('sentence').value=text;
-			$.post(
-				'https://apiv2.indico.io/emotion',
-				JSON.stringify({
-					'api_key': "0a21944dcb55f474092d70f7f6c4aeb0",
-					'data': text,
-				})
-				).then(function(res) { 
-					//html="";
-					//console.log(res);
-					var max=0;
-					sentiment=JSON.parse(res);
-					//console.log(sentiment);
-					sentiment=sentiment["results"];
-					for (feeling in sentiment){
-						if(max<sentiment[feeling]){
-							max=sentiment[feeling];
-							finalFeel = feeling;
-						}
-					}
-					html="Emotion= "+finalFeel;
-					document.getElementById('sent').innerHTML+=html;
-
-
-				});
-		}
-		function keywords() {
-			//debugger
-			sent = document.getElementById('testForm');
-			text=sent.elements[0].value;
-			document.getElementById('sentence').value=text;
 			$.post(
 				'https://apiv2.indico.io/keywords/batch?version=2',
 				JSON.stringify({
@@ -103,7 +66,32 @@
 					for (x=0;x<keywords.length;x++){
 						html+=keywords[x]+", ";
 					}
-					document.getElementById('sent').innerHTML+=" | Keywords = "+html+"<br><br>";
+					document.getElementById('sent').innerHTML+="| Keywords = "+html+" |";
+
+				});
+
+			$.post(
+				'https://apiv2.indico.io/emotion',
+				JSON.stringify({
+					'api_key': "0a21944dcb55f474092d70f7f6c4aeb0",
+					'data': text,
+				})
+				).then(function(res) { 
+					html="";
+					//console.log(res);
+					var max=0;
+					sentiment=JSON.parse(res);
+					//console.log(sentiment);
+					sentiment=sentiment["results"];
+					for (feeling in sentiment){
+						if(max<sentiment[feeling]){
+							max=sentiment[feeling];
+							finalFeel = feeling;
+						}
+					}
+					html="| Emotion= "+finalFeel+" |";
+					document.getElementById('sent').innerHTML+=html;
+
 
 				});
 

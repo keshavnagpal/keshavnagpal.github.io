@@ -12,8 +12,8 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Target sections, timeline items, stack groups, and curiosities for reveal
-document.querySelectorAll('section, .timeline-item, .stack-group, .curiosities-text').forEach(el => {
+// Target sections, timeline items, stack groups, tools, and curiosities for reveal
+document.querySelectorAll('section, .timeline-item, .stack-group, .tool-card, .curiosities-text').forEach(el => {
     el.classList.add('reveal');
     observer.observe(el);
 });
